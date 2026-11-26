@@ -36,7 +36,7 @@ INPUT_DOCS = [
 ]
 
 DIAGRAM_CAPTIONS = [
-    'Figure 1.1 — Three-Tier Client-Server Architecture (Browser, Hono Worker, Cloudflare D1)',
+    'Figure 1.1 — Three-Tier Client-Server Architecture (Browser, Application Server, SQLite Database)',
     'Figure 2.1 — Level 1: Conceptual Crow\'s Foot ERD',
     'Figure 2.2 — Level 2: Logical Crow\'s Foot ERD (Normalized through 3NF)',
     'Figure 2.3 — Level 3a: Physical Crow\'s Foot ERD — Core Identity, Auth, Projects, Requests & Tasks',
@@ -228,18 +228,18 @@ def build_html(parsed_docs: list[list[Block]]) -> str:
               <tr><th>Course &amp; Assessment</th><td>CS 213 – Database Management System (SA 3 – Database Application Project)</td></tr>
               <tr><th>Prepared For</th><td>Prof. Ivy Kim D. Machica</td></tr>
               <tr><th>Application Root</th><td><code>dsc-oms-cs213/</code></td></tr>
-              <tr><th>Database Platform</th><td>SQLite 3 / Cloudflare D1 (<code>migrations/0001</code>–<code>0010</code>, <code>PRAGMA foreign_keys = ON</code>)</td></tr>
-              <tr><th>Application Stack</th><td>Cloudflare Workers (Hono TypeScript API) + Vanilla ES Modules UI</td></tr>
+              <tr><th>Database Platform</th><td>SQLite 3 Relational DBMS (<code>PRAGMA foreign_keys = ON</code>, Schemas <code>0001</code>–<code>0010</code>)</td></tr>
+              <tr><th>System Architecture</th><td>Three-Tier Client–Server Web Application (Browser UI, Application Server, SQLite Database)</td></tr>
               <tr><th>Date</th><td>November 26, 2026</td></tr>
             </tbody>
           </table>
           <div class="cover-toc">
             <h2>Table of Contents</h2>
             <ol>
-              <li><strong>Part I:</strong> Project Documentation, Requirements, Business Rules, Role–Permission Matrix &amp; Architecture</li>
-              <li><strong>Part II:</strong> Three Separate Crow's Foot ERDs (Conceptual, Logical + 3NF, Physical SQLite/D1)</li>
+              <li><strong>Part I:</strong> Project Overview, CS 213 Concept Mapping, Requirements, Role–Permission Matrix &amp; Architecture</li>
+              <li><strong>Part II:</strong> Three Separate Crow's Foot ERDs (Conceptual, Logical + 3NF, Physical SQLite)</li>
               <li><strong>Part III:</strong> Complete Data Dictionary (<code>0001</code>–<code>0010</code>) &amp; Index / Trigger Design Rationale</li>
-              <li><strong>Part IV:</strong> Test Plan, Executed Verification (<code>TC01</code>–<code>TC12</code>, <code>TC-SEC-01</code>, <code>TC-DEPT-01</code>), Regression Summary &amp; Defect Log</li>
+              <li><strong>Part IV:</strong> Test Plan, Executed Verification (<code>TC01</code>–<code>TC12</code>, <code>TC-SEC-01</code>, <code>TC-DEPT-01</code>), Verification Summary &amp; Defect Log</li>
             </ol>
           </div>
         </section>
@@ -620,8 +620,8 @@ def build_docx(parsed_docs: list[list[Block]], diagram_pngs: list[bytes], out_pa
                 ['Course & Assessment', 'CS 213 – Database Management System (SA 3 – Database Application Project)'],
                 ['Prepared For', 'Prof. Ivy Kim D. Machica'],
                 ['Application Root', '`dsc-oms-cs213/`'],
-                ['Database Engine', 'SQLite 3 / Cloudflare D1 (`migrations/0001`–`0010`, `PRAGMA foreign_keys = ON`)'],
-                ['Application Stack', 'Cloudflare Workers (Hono TypeScript API) + Vanilla ES Modules UI'],
+                ['Database Engine', 'SQLite 3 Relational DBMS (`PRAGMA foreign_keys = ON`, Schemas `0001`–`0010`)'],
+                ['System Architecture', 'Three-Tier Client–Server Web Application (Browser UI, Application Server, SQLite Database)'],
                 ['Date', 'November 26, 2026'],
             ],
         )
@@ -631,10 +631,10 @@ def build_docx(parsed_docs: list[list[Block]], diagram_pngs: list[bytes], out_pa
         f'{docx_runs_xml("Table of Contents", base_size_half_pt=24, force_bold=True)}</w:p>'
     )
     for item in (
-        '1. **Part I:** Project Documentation, Requirements, Business Rules, Role–Permission Matrix & Architecture',
-        '2. **Part II:** Three Separate Crow\'s Foot ERDs (Conceptual, Logical + 3NF, Physical SQLite/D1)',
+        '1. **Part I:** Project Overview, CS 213 Concept Mapping, Requirements, Role–Permission Matrix & Architecture',
+        '2. **Part II:** Three Separate Crow\'s Foot ERDs (Conceptual, Logical + 3NF, Physical SQLite)',
         '3. **Part III:** Complete Data Dictionary (`0001`–`0010`) & Index / Trigger Design Rationale',
-        '4. **Part IV:** Test Plan, Executed Verification (`TC01`–`TC12`, `TC-SEC-01`, `TC-DEPT-01`), Regression Summary & Defect Log',
+        '4. **Part IV:** Test Plan, Executed Verification (`TC01`–`TC12`, `TC-SEC-01`, `TC-DEPT-01`), Verification Summary & Defect Log',
     ):
         body_xml.append(
             f'<w:p><w:pPr><w:ind w:left="360" w:hanging="220"/><w:spacing w:before="0" w:after="60"/></w:pPr>'

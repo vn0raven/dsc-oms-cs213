@@ -1,7 +1,7 @@
 # CS 213 – Complete Data Dictionary & Design Rationale
 
-**DBMS:** SQLite / Cloudflare D1 (`PRAGMA foreign_keys = ON`)  
-**Schema Source:** `migrations/0001_initial.sql` through `migrations/0010_cs213_auth_and_datamart.sql`
+**DBMS:** SQLite 3 (`PRAGMA foreign_keys = ON`)  
+**Schema Source:** SQL Schema Files `0001` through `0010`
 
 ---
 
@@ -126,10 +126,10 @@
 
 ## 5. Design Choices & Index Rationale
 
-1. **`UNIQUE` Constraints for Concurrency & Integrity:** `users.email (COLLATE NOCASE UNIQUE)`, `departments.name (COLLATE NOCASE UNIQUE)`, `tasks.source_request_id UNIQUE`, `ux_event_one_open_director`, and `ux_event_one_open_team_head` push race-condition enforcement directly into SQLite's storage engine so simultaneous API requests cannot create duplicate directors or double-convert requests.
+1. **`UNIQUE` Constraints for Concurrency & Integrity:** `users.email (COLLATE NOCASE UNIQUE)`, `departments.name (COLLATE NOCASE UNIQUE)`, `tasks.source_request_id UNIQUE`, `ux_event_one_open_director`, and `ux_event_one_open_team_head` push race-condition enforcement directly into SQLite's storage engine so simultaneous user requests cannot create duplicate directors or double-convert requests.
 2. **Filtered Composite Indexes for Reports & Exception Queries:**
    - `idx_tasks_department_status_created ON tasks(department_id, status, created_at DESC)` accelerates Grouped Summary and department-filtered Detailed reports.
    - `idx_tasks_status_deadline ON tasks(status, deadline)` accelerates Exception Report overdue scans (`deadline <= asOfDate AND status NOT IN ('Completed','Archived')`).
    - `idx_event_issues_active_report ON event_issues(status, severity, event_id)` accelerates unresolved High/Urgent issue exception checks.
-   - `idx_auth_sessions_user ON auth_sessions(user_id, revoked_at)` and `token_hash PRIMARY KEY` keep session validation `O(log N)` per API call.
-3. **Database Triggers for Transaction-Time Guardrails:** Triggers (`oms_task_state_guard`, `oms_last_lead_guard`, `oms_event_state_guard`, `oms_event_task_creation_guard`, `m3_blocking_issues`) guarantee that even if another session changes an Event's stage or deactivates an actor between API pre-checks and D1 batch commit, the entire batch aborts cleanly with `OMS_STATE_CONFLICT`.
+   - `idx_auth_sessions_user ON auth_sessions(user_id, revoked_at)` and `token_hash PRIMARY KEY` keep session validation fast on every authenticated action.
+3. **Database Triggers for Transaction-Time Guardrails:** Database triggers (`oms_task_state_guard`, `oms_last_lead_guard`, `oms_event_state_guard`, `oms_event_task_creation_guard`, `m3_blocking_issues`) guarantee that even if another user changes an Event's stage or deactivates an account concurrently, an invalid batch aborts cleanly without leaving partial records.

@@ -233,13 +233,13 @@ erDiagram
 
 ---
 
-## 3. Physical ERD (Crow's Foot Notation — SQLite / Cloudflare D1 Schema)
+## 3. Physical ERD (Crow's Foot Notation — SQLite Relational Schema)
 
-**Question Answered:** *How is the database physically implemented in SQLite / Cloudflare D1, including exact column types, nullability, defaults, constraints, and indexes matching `migrations/0001`–`0010`?*
+**Question Answered:** *How is the database physically implemented in SQLite, including exact column types, nullability, defaults, constraints, and indexes matching `migrations/0001`–`0010`?*
 
 **Physical Crow's Foot Legend:**
 - `PK` = Primary Key, `FK` = Foreign Key, `UK` = Unique Key/Constraint, `NN` = `NOT NULL`.
-- All timestamps are ISO-8601 UTC strings stored as `TEXT`; SQLite `PRAGMA foreign_keys = ON` and database triggers (`oms_*`, `m3_*`) enforce state-transition and authorization invariants inside atomic D1 transactions.
+- All timestamps are ISO-8601 UTC strings stored as `TEXT`; SQLite `PRAGMA foreign_keys = ON` and database triggers enforce state-transition and authorization invariants inside atomic transactions.
 
 ### 3.1 Core Identity, Auth, Projects, Requests & Tasks Physical Tables (Crow's Foot)
 
