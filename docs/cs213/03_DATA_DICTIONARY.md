@@ -31,7 +31,7 @@
 | `created_at` | Record creation UTC timestamp | `TEXT` | `NOT NULL DEFAULT strftime(...)` | ISO-8601 UTC |
 | `updated_at` | Last update UTC timestamp | `TEXT` | `NOT NULL DEFAULT strftime(...)` | ISO-8601 UTC |
 
-### `user_credentials` *(Migration 0010)*
+### `user_credentials`
 | Column | Meaning | SQLite Type | Key / Constraint | Valid Values |
 | --- | --- | --- | --- | --- |
 | `user_id` | Associated user account | `TEXT` | `PRIMARY KEY FK -> users(id) ON UPDATE CASCADE ON DELETE CASCADE` | Existing `users.id` |
@@ -40,7 +40,7 @@
 | `iterations` | PBKDF2 work factor | `INTEGER` | `NOT NULL DEFAULT 100000 CHECK (iterations >= 100000)` | `>= 100000` |
 | `updated_at` | Credential update timestamp | `TEXT` | `NOT NULL` | ISO-8601 UTC |
 
-### `auth_sessions` *(Migration 0010)*
+### `auth_sessions`
 | Column | Meaning | SQLite Type | Key / Constraint | Valid Values |
 | --- | --- | --- | --- | --- |
 | `token_hash` | SHA-256 hash of `dsc_oms_session` cookie | `TEXT` | `PRIMARY KEY` | 64-char hex digest |
@@ -60,7 +60,7 @@
 | `project_departments` | `id (PK)`, `project_id (FK CASCADE)`, `department_id (FK RESTRICT)`, `assigned_by (FK)`, `assigned_at`, `UNIQUE(project_id, department_id)` | Resolves M:N between `projects` and `departments` |
 | `project_members` | `id (PK)`, `project_id (FK CASCADE)`, `user_id (FK RESTRICT)`, `project_role (CHECK)`, `assigned_by (FK)`, `assigned_at`, `status (CHECK)`, `UNIQUE(project_id, user_id)` | `project_role`: `'Manager' \| 'Member'`; partial unique index `ux_project_one_active_manager` enforces at most 1 active manager per project |
 
-### `requests` *(Migrations 0001 & 0002)*
+### `requests`
 | Column | Meaning | SQLite Type | Key / Constraint | Valid Values |
 | --- | --- | --- | --- | --- |
 | `id` | Unique request ID | `TEXT` | `PRIMARY KEY` | UUID |
@@ -101,7 +101,7 @@
 | `event_approvals` | Formal Lead/Co-Lead approval decisions | `id (PK)`, `event_id (FK CASCADE)`, `decision CHECK('Approved'\|'Returned'\|'Rejected'\|'Closure Approved')` |
 | `event_stage_history` | Chronological stage transitions | `id (PK)`, `event_id (FK CASCADE)`, `actor_id (FK)` |
 | `event_closure_records` | Mandatory closure attestation & metrics | `event_id (PK, FK RESTRICT)`, `final_attendance >= 0`, `final_expense >= 0`, `financial_validated = 1`, `records_validated = 1` |
-| `event_task_links` | Associates M1 task with Event/Team | `task_id (PK, FK CASCADE)`, `event_id (FK CASCADE)`, `team_id (FK RESTRICT)` |
+| `event_task_links` | Associates a task with an Event and optional Event Team | `task_id (PK, FK CASCADE)`, `event_id (FK CASCADE)`, `team_id (FK RESTRICT)` |
 | `event_task_creation_requests` | Durable retry & transaction guard for Event task creation | `PRIMARY KEY(event_id, actor_id, request_id)`, `task_id (UNIQUE FK RESTRICT)`, trigger `oms_event_task_creation_guard` |
 | `event_requirements` & `event_requirement_history` | Readiness & Closure checklists + verification history | `id (PK)`, `phase CHECK('Readiness'\|'Closure')`, `status CHECK('Pending'\|'Submitted'\|'Verified'\|'Not Applicable')` |
 | `event_issues` | Operational issues & escalation | `id (PK)`, `severity CHECK('Low'\|'Medium'\|'High'\|'Urgent')`, `status CHECK('Open'\|'Escalated'\|'Resolved')` |
@@ -115,12 +115,12 @@
 
 | Table | Columns & Constraints | Purpose |
 | --- | --- | --- |
-| `notifications` *(0007)* | `id (PK)`, `user_id (FK CASCADE)`, `type (CHECK 18 types)`, `title`, `message`, `reference_type`, `reference_id`, `status ('Unread'\|'Read')`, `created_at`, `read_at` | Recipient-scoped workflow alerts |
-| `activity_log` *(0001)* | `id (PK)`, `occurred_at`, `actor_user_id (FK SET NULL)`, `actor_name`, `actor_role`, `action`, `reference_type`, `reference_id`, `old_value`, `new_value` | Immutable audit trail for security & business mutations |
-| `dm_dim_month` *(0010)* | `month_key (PK)`, `year`, `month (1..12)`, `quarter (1..4)`, `label` | Time dimension (`YYYY-MM`) for OLAP slicing |
-| `dm_dim_department` *(0010)* | `department_key (PK, FK -> departments.id)`, `department_name`, `status` | Department dimension for analytical joins |
-| `dm_fact_department_monthly_tasks` *(0010)* | `PRIMARY KEY (month_key, department_key)`, `active_task_count`, `completed_task_count`, `overdue_task_count`, `avg_progress`, `loaded_at` | Monthly department KPI grain excluding `Archived` tasks. `active_task_count` counts all open/in-progress non-archived tasks (`status NOT IN ('Completed', 'Archived')`, i.e., `Created` through `Approved`) so `active_task_count + completed_task_count == total non-archived tasks`. |
-| `dm_etl_runs` *(0010)* | `id (PK)`, `started_at`, `completed_at`, `triggered_by (FK -> users.id)`, `source_task_count`, `mart_task_count`, `reconciled (0\|1)` | Tracks ETL executions & OLTP reconciliation status |
+| `notifications` | `id (PK)`, `user_id (FK CASCADE)`, `type (CHECK 18 types)`, `title`, `message`, `reference_type`, `reference_id`, `status ('Unread'\|'Read')`, `created_at`, `read_at` | Recipient-scoped workflow alerts |
+| `activity_log` | `id (PK)`, `occurred_at`, `actor_user_id (FK SET NULL)`, `actor_name`, `actor_role`, `action`, `reference_type`, `reference_id`, `old_value`, `new_value` | Immutable audit trail for security & business mutations |
+| `dm_dim_month` | `month_key (PK)`, `year`, `month (1..12)`, `quarter (1..4)`, `label` | Time dimension (`YYYY-MM`) for OLAP slicing |
+| `dm_dim_department` | `department_key (PK, FK -> departments.id)`, `department_name`, `status` | Department dimension for analytical joins |
+| `dm_fact_department_monthly_tasks` | `PRIMARY KEY (month_key, department_key)`, `active_task_count`, `completed_task_count`, `overdue_task_count`, `avg_progress`, `loaded_at` | Monthly department KPI grain excluding `Archived` tasks. `active_task_count` counts all open/in-progress non-archived tasks (`status NOT IN ('Completed', 'Archived')`, i.e., `Created` through `Approved`) so `active_task_count + completed_task_count == total non-archived tasks`. |
+| `dm_etl_runs` | `id (PK)`, `started_at`, `completed_at`, `triggered_by (FK -> users.id)`, `source_task_count`, `mart_task_count`, `reconciled (0\|1)` | Tracks ETL executions & OLTP reconciliation status |
 
 ---
 

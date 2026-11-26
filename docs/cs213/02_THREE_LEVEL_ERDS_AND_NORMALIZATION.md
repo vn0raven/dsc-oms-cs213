@@ -537,4 +537,4 @@ erDiagram
 | `activity_log` | `idx_activity_reference_created` | `(reference_type, reference_id, occurred_at DESC)` | Per-entity audit history lookup |
 | `dm_fact_department_monthly_tasks` | `idx_dm_fact_dept` | `(department_key, month_key)` | Department trend & OLAP slicing |
 
-*(Note: Supporting M3/M2 tables `requests`, `notifications`, `event_approvals`, `event_stage_history`, `event_closure_records`, `event_requirements`, `event_requirement_history`, `event_records`, `event_schedule_items`, `event_debriefs`, `event_coordination_notes`, `announcements`, `announcement_reads`, and `announcement_history` are fully documented in [03_DATA_DICTIONARY.md](03_DATA_DICTIONARY.md).)*
+*(Note: Supporting operational, governance, and communication tables `requests`, `notifications`, `event_approvals`, `event_stage_history`, `event_closure_records`, `event_requirements`, `event_requirement_history`, `event_records`, `event_schedule_items`, `event_debriefs`, `event_coordination_notes`, `announcements`, `announcement_reads`, and `announcement_history` are fully documented in [03_DATA_DICTIONARY.md](03_DATA_DICTIONARY.md).)*

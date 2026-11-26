@@ -196,6 +196,8 @@ dist/
 wrangler.qa.jsonc
 .cs213-state/
 wrangler.cs213.jsonc
+__pycache__/
+*.pyc
 *-validation.txt
 validation-current.txt
 baseline-current.txt

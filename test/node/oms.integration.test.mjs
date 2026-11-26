@@ -203,16 +203,3 @@ test('one canonical appearance switcher and one notification bell remain in load
  assert.equal(app.match(/data-notification-menu/g)?.length,1);
  assert.equal(app.match(/data-theme-choice="/g)?.length,3);
 });
-
-test('deployment gate rejects implicit and unconfigured staged deploy without remote calls',async()=>{
- const {spawnSync}=await import('node:child_process');
- const path=(await import('node:url')).fileURLToPath(new URL('../..',import.meta.url));
- const manifest=JSON.parse(fs.readFileSync(new URL('../../package.json',import.meta.url),'utf8'));
- assert.equal(manifest.scripts.deploy,'node scripts/deploy_checked.mjs');
- const implicit=spawnSync(process.execPath,['scripts/deploy_checked.mjs'],{cwd:path,encoding:'utf8'});
- assert.equal(implicit.status,1);
- assert.match(implicit.stderr,/Refusing ambiguous deploy/);
- const explicit=spawnSync(process.execPath,['scripts/deploy_checked.mjs','staging'],{cwd:path,encoding:'utf8'});
- assert.equal(explicit.status,1);
- assert.match(explicit.stderr,/environment isolation gate failed/);
-});

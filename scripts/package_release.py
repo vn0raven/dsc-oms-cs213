@@ -9,7 +9,7 @@ import hashlib
 ROOT = Path(__file__).resolve().parents[1]
 DEST = ROOT / 'dist' / 'dsc-oms-cs213-submission.zip'
 ROOT_FILES = {
-    'README.md', 'README_CS213.md', 'CHANGELOG.md', 'package.json', 'package-lock.json',
+    'README.md', 'package.json', 'package-lock.json',
     'tsconfig.json', 'wrangler.jsonc', 'vitest.config.mts', 'worker-configuration.d.ts',
     '.editorconfig', '.prettierrc', '.gitignore',
 }
@@ -69,7 +69,7 @@ def package():
             'src/index.ts',
             'migrations/0004_state_invariants.sql',
             'migrations/0010_cs213_auth_and_datamart.sql',
-            'README_CS213.md',
+            'README.md',
             'scripts/Start-CS213.ps1',
             'scripts/cs213_demo_seed.sql',
             'docs/cs213/01_PROJECT_DOCUMENTATION.md',

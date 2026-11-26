@@ -2,19 +2,19 @@
 
 ## 1. Test Plan Metadata
 
-- **Application Under Test:** DSC OMS (`dsc-oms-cs213` — CS 213 SA 3 Release Candidate, built from Nov 22 UI Polish baseline + Migration `0010`)
+- **Application Under Test:** DSC OMS (`dsc-oms-cs213`)
 - **DBMS:** SQLite 3 / Cloudflare D1 (`PRAGMA foreign_keys = ON`, Migrations `0001`–`0010`)
 - **Runtime & Harnesses:**
-  1. **Node Integration & Route Suite (`test/node/cs213-sa3.test.mjs` + 7 existing suites):** Real Hono HTTP routes + compiled TypeScript services + in-memory SQLite D1 adapter (`scripts/m3_local_demo_seed.sql` + `scripts/cs213_demo_seed.sql`).
+  1. **Node Integration & Route Suite (`test/node/cs213-sa3.test.mjs` + 7 integration suites):** Real Hono HTTP routes + compiled TypeScript services + in-memory SQLite D1 adapter (`scripts/m3_local_demo_seed.sql` + `scripts/cs213_demo_seed.sql`).
   2. **Native Cloudflare Worker + D1 (`vitest run`):** Real `workerd` runtime + local D1 batch transactions.
-  3. **Live Loopback Browser E2E (`test/cs213_browser_e2e.py`):** Local Wrangler (`wrangler.cs213.jsonc` on `http://127.0.0.1:8787`, `.cs213-state`) + Chromium Playwright.
+  3. **Live Loopback Browser E2E (`test/cs213_browser_e2e.py`):** Local Wrangler (`http://127.0.0.1:8787`) + Chromium Playwright.
 - **Test Accounts & Roles (Synthetic Only):**
   - `demo.lead@example.test` / `LeadPass#2026` — Role: `Lead` (`demo_dept_eng`)
   - `demo.colead@example.test` / `CoLeadPass#2026` — Role: `Co-Lead` (`demo_dept_creative`)
   - `demo.executive@example.test` / `ExecPass#2026` — Role: `Executive` (`demo_dept_creative`, accepted `Team Head`)
   - `demo.member@example.test` / `MemberPass#2026` — Role: `Member` (`demo_dept_eng`, accepted `Event Director` on `m3demo_event_workshop`)
-- **Setup / Reset Steps:** Run `powershell.exe -NoProfile -File scripts/Start-CS213.ps1` (or delete `.cs213-state` and re-run migrations `0001`–`0010` + `m3_local_demo_seed.sql` + `cs213_demo_seed.sql`).
-- **Person Responsible:** CS 213 Project Team / Next Engineer (executed locally on November 25, 2026 PHT).
+- **Setup / Reset Steps:** Run `powershell.exe -NoProfile -File scripts/Start-CS213.ps1` (or delete `.cs213-state` and re-apply migrations `0001`–`0010` + `m3_local_demo_seed.sql` + `cs213_demo_seed.sql`).
+- **Person Responsible:** CS 213 Project Team (executed locally on November 26, 2026 PHT).
 
 ---
 
@@ -41,11 +41,11 @@
 
 ## 3. Baseline Regression Summary (Executed Nov 26, 2026)
 
-In addition to `TC01`–`TC12` and `TC-DEPT-01`, the complete existing regression harness ran and passed (`exitCode: 0` across all 12 groups in `dist/validation/results.json`):
+In addition to `TC01`–`TC12` and `TC-DEPT-01`, the complete automated test harness ran and passed (`exitCode: 0` across all checks):
 - **TypeScript (`tsc --noEmit` app & `test/tsconfig.json`):** `0` errors
-- **Node Integration & Unit Suites (`test/node/*.test.mjs`, 8 files):** All `117` test cases passed (`113` original M1–Finalization tests + `4` suites in `cs213-sa3.test.mjs`)
+- **Node Integration & Unit Suites (`test/node/*.test.mjs`, 8 files):** All `116` test cases passed (`112` core integration tests + `4` suites in `cs213-sa3.test.mjs`)
 - **Native Cloudflare `workerd` + D1 (`vitest run`):** `9/9` tests passed
-- **Python SQLite Invariant, Smoke, Seed & Upgrade Suites:** `20/20` passed (`12` invariants, `5` M3 smoke, `1` M2→M3 upgrade, `1` local seed, `1` `0008–0010` upgrade & backup/restore rehearsal)
+- **Python SQLite Invariant, Smoke, Seed & Upgrade Suites:** `20/20` passed (`12` invariants, `5` operations smoke tests, `1` migration upgrade test, `1` local seed test, `1` backup/restore rehearsal)
 - **CSS & Shipped JS/MJS Syntax:** `9/9` stylesheets (`0` errors), `37/37` JS/MJS modules (`0` errors)
 - **Live Loopback Wrangler Browser E2E (`test/cs213_browser_e2e.py`):** `6/6` E2E steps passed
 
@@ -55,20 +55,20 @@ In addition to `TC01`–`TC12` and `TC-DEPT-01`, the complete existing regressio
 
 | Defect ID | Found In | Description | Fix & Retest Outcome |
 | --- | --- | --- | --- |
-| `DEF-01` | `TC06` (Test Setup) | Initial test injection tried `UPDATE events SET status='For Closure'` directly from `'Planning'`, which was legitimately blocked by `oms_event_state_guard` (`Planning -> For Closure` is not an allowed lifecycle edge). | Updated `TC06` test setup in [cs213-sa3.test.mjs](../../test/node/cs213-sa3.test.mjs) to simulate concurrent user deactivation (`UPDATE users SET status='Inactive'`) before `db.batch()`, triggering `oms_event_task_creation_guard` mid-transaction and proving full rollback (`tasks=11->11`, `audit=10->10`). Retested: **PASS**. |
-| `AUD-01` | Audit (`user.service.ts`, `user-manage.js`) | `POST /api/users` rejected `password`, so newly created accounts lacked `user_credentials` for local login. | Added optional `password` (`8`–`128` chars), PBKDF2-SHA256 atomic insert into `user_credentials`, and UI field in `openCreateUser()`. Verified in `AUDIT_FIXES`: login `200`, wrong password `401`, password absent from `activity_log`. Retested: **PASS**. |
-| `AUD-02` | Audit (`reports.repository.ts`, `reports.js`) | `getSummaryReport()` filtered `WHERE d.status = 'Active'`, dropping historical non-archived tasks in soft-deactivated departments. | Updated query to include inactive departments with non-archived tasks and added `(Inactive)` label in `reports.js`. Verified 3-way reconciliation (`Summary=8 == Detailed=8 == DataMart=8`). Retested: **PASS**. |
-| `AUD-03` | Audit (`users.repository.ts`) | Deactivating a user blocked active requests via `users.status`, but did not stamp `revoked_at` on existing `auth_sessions`. | Added `UPDATE auth_sessions SET revoked_at = ?` inside `updateUserStatusRecord()`'s atomic batch on deactivation. Verified old cookie returns `401` even after reactivation. Retested: **PASS**. |
-| `AUD-04` | Audit (`users.routes.ts`) | `PATCH /api/users/testing/status` updated `users` directly without an `activity_log` entry or session revocation. | Wrapped `UPDATE users`, session revocation, and `TESTING_STATUS_CHANGED` `activity_log` insert in `env.DB.batch([...])`. Verified in `AUDIT_FIXES`. Retested: **PASS**. |
-| `AUD-05` | Audit (`reports.js`, `03_DATA_DICTIONARY.md`) | Data Mart header `Active Tasks` risked confusion with `SummaryReport.activeTasks` (`Assigned..Approved`). | Relabeled Data Mart header to `Open / Active (Created–Approved)` and documented `status NOT IN ('Completed', 'Archived')` in [03_DATA_DICTIONARY.md](03_DATA_DICTIONARY.md). Retested: **PASS**. |
-| `LOG-01` | Deep Audit (`project.service.ts`) | `DELETE /api/projects/:id` returned `500 INTERNAL_ERROR` when a Draft project was linked to an Event or Announcement (`ON DELETE RESTRICT`). | Added pre-delete Event & Announcement count checks and mapped `FOREIGN KEY constraint failed` to `409 PROJECT_DELETE_NOT_SAFE`. Verified in `DEEP_AUDIT_FIXES`. Retested: **PASS**. |
-| `LOG-02` | Deep Audit (`reports.repository.ts`) | `getDepartmentWorkloadReport()` still filtered `WHERE d.status = 'Active'`, diverging from `Summary` after soft-deactivating a department with tasks. | Updated `getDepartmentWorkloadReport()` to include inactive departments holding non-archived tasks. Verified `WorkloadSum = 8 == SummaryTotal = 8`. Retested: **PASS**. |
-| `LOG-03` | Deep Audit (`index.ts`) | Concurrent `POST /api/m3/events/:id/debrief` could surface `500 INTERNAL_ERROR` on `UNIQUE constraint failed: event_debriefs.event_id`. | Added `event_debriefs.` unique-constraint mapping to `409 EVENT_CONFLICT` in `src/index.ts`. Verified `[201, 409]` under `Promise.all`. Retested: **PASS**. |
-| `P3-01` | Polish (`reports.js`, `01_PROJECT_DOCUMENTATION.md`) | `Exception As-Of Date` defaulted to UTC `.toISOString().slice(0, 10)`, differing from PHT local calendar date between `00:00`–`08:00` PHT. | Switched default `todayIso` to local `getFullYear()/getMonth()+1/getDate()` and documented UTC timestamp storage semantics in [01_PROJECT_DOCUMENTATION.md](01_PROJECT_DOCUMENTATION.md). Retested: **PASS**. |
-| `P3-02` | Polish (`datamart.service.ts`, `reports.js`) | Renaming or deactivating a department in OLTP left `dm_dim_department` stale without surfacing a refresh prompt until ETL ran. | Added `dimensionsSynced` check comparing `departments` vs. `dm_dim_department` in `getOperationsDataMart()` and clear UI badge prompt in `reports.js`. Verified `P3_DIMENSION_SYNC` (`false` → ETL → `true`). Retested: **PASS**. |
+| `DEF-01` | `TC06` (Test Setup) | Initial test injection tried `UPDATE events SET status='For Closure'` directly from `'Planning'`, which was legitimately blocked by `oms_event_state_guard` (`Planning -> For Closure` is not an allowed lifecycle edge). | Updated `TC06` test setup in `test/node/cs213-sa3.test.mjs` to simulate concurrent user deactivation (`UPDATE users SET status='Inactive'`) before `db.batch()`, triggering `oms_event_task_creation_guard` mid-transaction and proving full rollback (`tasks=11->11`, `audit=10->10`). Retested: **PASS**. |
+| `DEF-02` | User Management (`user.service.ts`, `user-manage.js`) | `POST /api/users` previously omitted a `password` field, so newly created accounts lacked `user_credentials` for local login. | Added optional `password` (`8`–`128` chars), PBKDF2-SHA256 atomic insert into `user_credentials`, and UI field in `openCreateUser()`. Verified login `200`, wrong password `401`, and password absent from `activity_log`. Retested: **PASS**. |
+| `DEF-03` | Summary Report (`reports.repository.ts`, `reports.js`) | `getSummaryReport()` filtered `WHERE d.status = 'Active'`, dropping historical non-archived tasks in soft-deactivated departments. | Updated query to include inactive departments with non-archived tasks and added `(Inactive)` label in `reports.js`. Verified 3-way reconciliation (`Summary == Detailed == DataMart`). Retested: **PASS**. |
+| `DEF-04` | Session Security (`users.repository.ts`) | Deactivating a user blocked active requests via `users.status`, but did not stamp `revoked_at` on existing `auth_sessions`. | Added `UPDATE auth_sessions SET revoked_at = ?` inside `updateUserStatusRecord()`'s atomic batch on deactivation. Verified prior cookie returns `401` even after reactivation. Retested: **PASS**. |
+| `DEF-05` | Account Toggle (`users.routes.ts`) | `PATCH /api/users/testing/status` updated `users` directly without an `activity_log` entry or session revocation. | Wrapped `UPDATE users`, session revocation, and `TESTING_STATUS_CHANGED` `activity_log` insert in `env.DB.batch([...])`. Verified with automated integration test. Retested: **PASS**. |
+| `DEF-06` | Data Mart UI (`reports.js`, `03_DATA_DICTIONARY.md`) | Data Mart header `Active Tasks` risked confusion with `SummaryReport.activeTasks` (`Assigned..Approved`). | Relabeled Data Mart header to `Open / Active (Created–Approved)` and documented `status NOT IN ('Completed', 'Archived')` in `03_DATA_DICTIONARY.md`. Retested: **PASS**. |
+| `DEF-07` | Project Deletion (`project.service.ts`) | `DELETE /api/projects/:id` returned `500 INTERNAL_ERROR` when a Draft project was linked to an Event or Announcement (`ON DELETE RESTRICT`). | Added pre-delete Event & Announcement count checks and mapped `FOREIGN KEY constraint failed` to `409 PROJECT_DELETE_NOT_SAFE`. Retested: **PASS**. |
+| `DEF-08` | Workload Report (`reports.repository.ts`) | `getDepartmentWorkloadReport()` still filtered `WHERE d.status = 'Active'`, diverging from `Summary` after soft-deactivating a department with tasks. | Updated `getDepartmentWorkloadReport()` to include inactive departments holding non-archived tasks. Verified workload sum equals summary total. Retested: **PASS**. |
+| `DEF-09` | Event Debrief (`index.ts`) | Concurrent `POST /api/m3/events/:id/debrief` could surface `500 INTERNAL_ERROR` on `UNIQUE constraint failed: event_debriefs.event_id`. | Added `event_debriefs.` unique-constraint mapping to `409 EVENT_CONFLICT` in `src/index.ts`. Verified `[201, 409]` under `Promise.all`. Retested: **PASS**. |
+| `DEF-10` | Exception Date Default (`reports.js`, `01_PROJECT_DOCUMENTATION.md`) | `Exception As-Of Date` defaulted to UTC `.toISOString().slice(0, 10)`, differing from PHT local calendar date between `00:00`–`08:00` PHT. | Switched default `todayIso` to local `getFullYear()/getMonth()+1/getDate()` and documented UTC timestamp storage semantics in `01_PROJECT_DOCUMENTATION.md`. Retested: **PASS**. |
+| `DEF-11` | Data Mart Sync (`datamart.service.ts`, `reports.js`) | Renaming or deactivating a department in OLTP left `dm_dim_department` stale without surfacing a refresh prompt until ETL ran. | Added `dimensionsSynced` check comparing `departments` vs. `dm_dim_department` in `getOperationsDataMart()` and UI sync badge prompt in `reports.js`. Retested: **PASS**. |
 
 ---
 
 ## 5. Known Limitations (Honest Scope)
-- Classroom setup uses local loopback Wrangler (`127.0.0.1:8787`) and synthetic demo accounts; production Cloudflare Access JWT/JWKS policies (`FIN-13`) and dedicated finance/attendance trackers (`FIN-15`) remain intentionally out of scope.
+- Classroom setup uses local loopback Wrangler (`127.0.0.1:8787`) and synthetic demo accounts; production Cloudflare Access JWT/JWKS policies and external financial/attendance ledgers remain out of scope.
 - `dm_fact_department_monthly_tasks` refreshes via full atomic recomputation (`DELETE` + `INSERT` inside `env.DB.batch`) suitable for student organization scale; very large multi-million-row warehouses would require incremental watermarks.

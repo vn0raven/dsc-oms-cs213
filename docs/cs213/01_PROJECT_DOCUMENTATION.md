@@ -4,8 +4,8 @@
 **Course:** CS 213 – Database Management System  
 **Assessment:** SA 3 – Database Application Project  
 **Prepared for:** Prof. Ivy Kim D. Machica  
-**Application Root:** `dsc-oms-cs213/` (isolated clean CS 213 copy; original handover repository preserved unmodified)  
-**Date:** November 25, 2026 (PHT)
+**Application Root:** `dsc-oms-cs213/`  
+**Date:** November 26, 2026 (PHT)
 
 ---
 
@@ -21,7 +21,7 @@
 
 ### 1.2 System Scope
 - **What the System WILL Do:**
-  - Authenticate users locally with **PBKDF2-SHA256 (`100,000` iterations)** password hashing and `HttpOnly`, `SameSite=Strict` session cookies (while retaining Cloudflare Access JWT compatibility).
+  - Authenticate users locally with **PBKDF2-SHA256** (`100,000` iterations) password hashing and `HttpOnly`, `SameSite=Strict` session cookies (while retaining Cloudflare Access JWT compatibility).
   - Manage permanent organization directory records (**Departments**, **Users**, **Projects**, **Tasks**, **Requests**, **Announcements**, **Notifications**) and governance-aware **Events** (11-stage lifecycle, Teams, consent-based temporary appointments, Readiness/Closure verification, Operational Issues, Schedules, Notes, Debriefs).
   - Execute complete end-to-end workflows (e.g., **Event Proposal → Lead Approval → Team Formation → Delegated Event Task Creation → Task Assignment & Review → Reporting & Data Mart ETL**).
   - Enforce server-side **Role–Permission Matrix** checks and database-level **SQLite triggers / constraints**.
@@ -35,7 +35,7 @@
 
 ## 2. Testable Functional & Non-Functional Requirements
 
-Requirements are tagged as **Core** (baseline OMS M1–M3.5 + DB integrity) or **Enhancement** (Finalization + CS 213 SA 3 security, reporting, and warehousing additions).
+Requirements are tagged as **Core** (operational directory, workflows, RBAC, and DB integrity) or **Enhancement** (local session security, analytics reporting, Data Mart, CSV import, and delegated Event task creation).
 
 | ID | Category | Classification | Requirement Statement |
 | --- | --- | --- | --- |
@@ -94,7 +94,7 @@ Requirements are tagged as **Core** (baseline OMS M1–M3.5 + DB integrity) or *
 ### 4.2 How the Matrix Is Applied
 1. Each user holds one permanent system role (`Lead`, `Co-Lead`, `Executive`, or `Member`) in `users.role`, plus optional temporary event appointments in `event_appointments`.
 2. After login (`POST /api/auth/login`), the browser hides restricted navigation links (`Reports`, `Audit Log`, `Add Member`) based on `/api/auth/me`.
-3. **Server enforcement is authoritative:** Every API route executes `requireAuth` followed by `requirePermission(...)` (in [authorization.ts](file:///C:/Users/dinga/.gemini/antigravity/scratch/dsc-oms-cs213/src/middleware/authorization.ts)) or service-level capability queries (`eventTaskCapabilities` in [event.service.ts](file:///C:/Users/dinga/.gemini/antigravity/scratch/dsc-oms-cs213/src/services/event.service.ts)) **and** database triggers before any write commits. Hiding a menu alone never protects an endpoint.
+3. **Server enforcement is authoritative:** Every API route executes `requireAuth` followed by `requirePermission(...)` (in `src/middleware/authorization.ts`) or service-level capability queries (`eventTaskCapabilities` in `src/services/event.service.ts`) **and** database triggers before any write commits. Hiding a menu alone never protects an endpoint.
 
 ### 4.3 Sample Security Test Case (`TC-SEC-01`)
 

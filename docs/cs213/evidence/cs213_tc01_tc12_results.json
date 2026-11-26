@@ -1,5 +1,5 @@
 {
-  "executedAt": "2026-11-26T05:51:22.970Z",
+  "executedAt": "2026-11-26T06:29:52.436Z",
   "testSuite": "test/node/cs213-sa3.test.mjs",
   "cases": {
     "TC03": {
@@ -12,7 +12,7 @@
     },
     "TC01": {
       "status": "PASS",
-      "createdTaskId": "task_b805fca4-6783-4131-be98-063a61a9c225",
+      "createdTaskId": "task_a344e96d-fe5f-4af4-b1ea-80ff23fe98e1",
       "updatedDescription": "Updated core workflow description"
     },
     "TC02": {
@@ -100,7 +100,7 @@
     },
     "TC11": {
       "status": "PASS",
-      "etlRunId": "dm_run_c14bb522-31af-46f1-a517-5c213f162138",
+      "etlRunId": "dm_run_2b564d4e-fffa-4ea9-bfa9-000adc5134cc",
       "oltpNonArchivedTaskCount": 10,
       "martTotalTaskCount": 10,
       "excludedArchivedTaskCount": 1,
@@ -137,8 +137,8 @@
           "actor_user_id": "demo_user_lead",
           "actor_role": "Lead",
           "reference_type": "DATAMART",
-          "reference_id": "dm_run_c14bb522-31af-46f1-a517-5c213f162138",
-          "occurred_at": "2026-11-26T05:51:23.340Z"
+          "reference_id": "dm_run_2b564d4e-fffa-4ea9-bfa9-000adc5134cc",
+          "occurred_at": "2026-11-26T06:29:52.676Z"
         },
         {
           "action": "EVENT_APPOINTMENT_PROPOSED",
@@ -146,7 +146,7 @@
           "actor_role": "Lead",
           "reference_type": "EVENT",
           "reference_id": "m3demo_event_talk",
-          "occurred_at": "2026-11-26T05:51:23.332Z"
+          "occurred_at": "2026-11-26T06:29:52.668Z"
         },
         {
           "action": "AUTH_LOGIN_SUCCESS",
@@ -154,15 +154,15 @@
           "actor_role": "Co-Lead",
           "reference_type": "USER",
           "reference_id": "demo_user_colead",
-          "occurred_at": "2026-11-26T05:51:23.305Z"
+          "occurred_at": "2026-11-26T06:29:52.639Z"
         },
         {
           "action": "TASK_CREATED",
           "actor_user_id": "demo_user_member",
           "actor_role": "Member",
           "reference_type": "TASK",
-          "reference_id": "task_c8c2a49e-d20b-48e3-bb8f-d5e95ce94e76",
-          "occurred_at": "2026-11-26T05:51:23.298Z"
+          "reference_id": "task_e7c99883-ea03-414e-93cb-75ef223995ca",
+          "occurred_at": "2026-11-26T06:29:52.635Z"
         },
         {
           "action": "EVENT_TASK_CREATED",
@@ -170,21 +170,21 @@
           "actor_role": "Member",
           "reference_type": "EVENT",
           "reference_id": "m3demo_event_workshop",
-          "occurred_at": "2026-11-26T05:51:23.298Z"
+          "occurred_at": "2026-11-26T06:29:52.635Z"
         },
         {
           "action": "USER_CREATED",
           "actor_user_id": "demo_user_lead",
           "actor_role": "Lead",
           "reference_type": "USER",
-          "reference_id": "usr_195ed8ea-fd8d-4dc7-94b3-94745c37dc44",
-          "occurred_at": "2026-11-26T05:51:23.296Z"
+          "reference_id": "usr_0a64843f-df4c-4a3a-82e1-e2bb6ae20835",
+          "occurred_at": "2026-11-26T06:29:52.632Z"
         }
       ]
     },
     "DEPT_CRUD": {
       "status": "PASS",
-      "createdId": "dept_8923af5f-60d1-4838-bfdf-f044ae940ed8",
+      "createdId": "dept_1b717f30-48f3-4b15-aeda-b22e94dba0dc",
       "nonLead403Checked": [
         "Co-Lead",
         "Executive",

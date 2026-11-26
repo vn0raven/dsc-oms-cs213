@@ -1,9 +1,8 @@
 {
-  "name": "dsc-oms-cloudflare",
-  "version": "0.0.0",
+  "name": "dsc-oms-cs213",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
-    "deploy": "node scripts/deploy_checked.mjs",
     "dev": "wrangler dev",
     "start": "wrangler dev",
     "test": "vitest",
@@ -11,9 +10,7 @@
     "test:offline": "node test/offline-build.mjs && node --test test/node/*.test.mjs",
     "test:db": "python test/db_invariants.py",
     "package:safe": "python scripts/package_release.py",
-    "check:deploy-config": "node scripts/check_deployment_environments.mjs",
-    "test:local-seed": "python test/m3_local_seed.py",
-    "test:ui-repair": "python test/m3_ui_repair_browser.py"
+    "test:local-seed": "python test/m3_local_seed.py"
   },
   "devDependencies": {
     "@cloudflare/vitest-plugin": "1.8.5",

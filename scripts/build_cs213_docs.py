@@ -227,7 +227,7 @@ def build_html(parsed_docs: list[list[Block]]) -> str:
             <tbody>
               <tr><th>Course &amp; Assessment</th><td>CS 213 – Database Management System (SA 3 – Database Application Project)</td></tr>
               <tr><th>Prepared For</th><td>Prof. Ivy Kim D. Machica</td></tr>
-              <tr><th>Application Root</th><td><code>dsc-oms-cs213/</code> (isolated clean CS 213 copy)</td></tr>
+              <tr><th>Application Root</th><td><code>dsc-oms-cs213/</code></td></tr>
               <tr><th>Database Platform</th><td>SQLite 3 / Cloudflare D1 (<code>migrations/0001</code>–<code>0010</code>, <code>PRAGMA foreign_keys = ON</code>)</td></tr>
               <tr><th>Application Stack</th><td>Cloudflare Workers (Hono TypeScript API) + Vanilla ES Modules UI</td></tr>
               <tr><th>Date</th><td>November 26, 2026</td></tr>
@@ -417,6 +417,9 @@ def build_html(parsed_docs: list[list[Block]]) -> str:
     color: #000000;
     vertical-align: top;
     word-wrap: break-word;
+  }}
+  td:first-child code {{
+    white-space: nowrap;
   }}
   figure.diagram-figure {{
     margin: 10px 0 14px 0;
@@ -616,7 +619,7 @@ def build_docx(parsed_docs: list[list[Block]], diagram_pngs: list[bytes], out_pa
             [
                 ['Course & Assessment', 'CS 213 – Database Management System (SA 3 – Database Application Project)'],
                 ['Prepared For', 'Prof. Ivy Kim D. Machica'],
-                ['Application Root', '`dsc-oms-cs213/` (isolated clean CS 213 copy)'],
+                ['Application Root', '`dsc-oms-cs213/`'],
                 ['Database Engine', 'SQLite 3 / Cloudflare D1 (`migrations/0001`–`0010`, `PRAGMA foreign_keys = ON`)'],
                 ['Application Stack', 'Cloudflare Workers (Hono TypeScript API) + Vanilla ES Modules UI'],
                 ['Date', 'November 26, 2026'],

@@ -1,86 +1,64 @@
-# DSC OMS — Reviewed Source Candidate
+# DSC Operations Management System (DSC OMS)
 
-Latest frontend update: [November 22 focused UI polish and validation](docs/UI_POLISH_2026_11_22.md). This supersedes earlier UI layout/zoom limitations for the specifically tested paths; backend and production-readiness decisions are unchanged.
+**Course:** CS 213 – Database Management System (SA 3 – Database Application Project)  
+**Instructor:** Prof. Ivy Kim D. Machica  
+**Stack:** Cloudflare Workers (Hono TypeScript API) · SQLite 3 / Cloudflare D1 (`PRAGMA foreign_keys = ON`) · Vanilla ES Modules & CSS
 
-## November 19, 2026 finalization candidate
+---
 
-Start with [Finalization report](docs/FINALIZATION_REPORT.md), [current issues and governance decisions](docs/FINALIZATION_ISSUES.md), [Event task API](docs/EVENT_TASK_API.md), [spreadsheet migration](docs/SPREADSHEET_MIGRATION.md), and [local setup / deployment gates / rollback](docs/LOCAL_SETUP_AND_ROLLBACK.md). Older milestone results below are historical, not current release evidence.
+## 1. System Overview
+**DSC OMS (`dsc-oms-cs213`)** replaces manual spreadsheet trackers with a role-governed, database-backed web application for managing **Departments**, **Users & Sessions**, **Projects**, **Tasks**, **Cross-Department Requests**, **Governance-Aware Events**, **Announcements**, **Reports**, **Operations Analytics Data Mart ETL**, and an immutable **Activity Audit Log**.
 
-This candidate adds creation-only delegation for accepted Event Directors/Team Heads, atomic task/link/audit writes and retry keys, improved Event Tasks/Organization/Operations, shared Event-aware Board/Sheet filtering, and controlled CSV imports using existing permanent-role rights. New migrations are 0008 and 0009; previous migrations are unchanged. **Production remains NO-GO pending the documented staging, Access, governance and operational acceptance gates.**
+Browser scripts never access SQLite directly; all requests pass through authenticated, origin-checked Worker routes using parameterized `.prepare(...).bind(...)` queries and atomic `env.DB.batch(...)` transactions guarded by SQLite triggers and `UNIQUE` / `CHECK` / `ON DELETE RESTRICT` constraints.
 
-This is a **non-deployed, staged-review source archive** of the Developer Student Community Operations Management System, based on the supplied Cloudflare Worker/Hono/D1 project. It retains the original product and visual identity, and adds targeted security/workflow fixes, a safe source packager and synthetic test suites.
+---
 
-**Start here:** `docs/ARCHITECTURE_AND_AUDIT.md`, `docs/ISSUE_REGISTER.md` and `.csv`, `docs/VALIDATION.md`, and `docs/DEPLOYMENT_READINESS.md`. The new migration is `migrations/0004_state_invariants.sql`; obtain human approval and rehearse against a staging copy first.
+## 2. Quick Start (Local Classroom Run)
 
-With a clean npm dependency install, check the project via `npm run test:offline`, `npm run test:db`, and `npx tsc --noEmit`. Build a safe shareable source bundle with `npm run package:safe`. Do **not** deploy or apply migrations automatically; the Wrangler config still needs independently configured staging/production databases and Cloudflare Access policies.
-
-## Security and verification (2026-10-22 remediation)
-
-This archive is a **candidate**, not a deployed release. See `docs/HARDENING_ROUND2.md`, `docs/ISSUE_REGISTER.md`, `docs/SECURITY_VERIFICATION_ROUND2.md`, `docs/PERFORMANCE_ROUND2.md`, `docs/VALIDATION_ROUND2.md`, and `docs/DEPLOYMENT_READINESS.md`.
-
-Run `npm run test:offline`, `npm run test:db`, `tsc --noEmit` and, if Chromium and Python Playwright are installed, `python test/browser_component_smoke.py`. Native Worker tests require a clean compatible runtime. `npm run check:deploy-config` **is expected to fail** until separate staging/production environments are configured by the Cloudflare owner.
-
-`npm run deploy` now refuses implicit deploys. Only after approved environment setup, staging migration rehearsal, Access verification and release signoff may an operator invoke `DSC_RELEASE_APPROVED=YES npm run deploy -- staging` (or production after additional review). Never enable development identity overrides on Cloudflare public hosts. Do not migrate production directly from this offline review.
-
-
-## UI remediation round 3 — local verification
-
-The source code in this package includes the revised layout, typography, theme and accessible filter labels. Findings, screenshots and scope limitations are documented in:
-
-- `docs/UI_REPAIR_ROOT_CAUSES.md`
-- `docs/UI_REPAIR_ISSUE_REGISTER.md`
-- `docs/UI_REPAIR_ACCESSIBILITY.md`
-- `docs/UI_REPAIR_VALIDATION.md`
-- `docs/UI_REPAIR_CSS_OWNERSHIP.md`
-
-For offline verification, run `npm ci`, `npx tsc --noEmit`, `npm run test:offline`, and `python test/db_invariants.py`. With Python Playwright and Chromium installed, `python test/ui_browser_regression.py` renders the **actual module render functions and actual CSS** with synthetic fixtures at five CSS widths. This component harness deliberately does not connect to D1 or authenticate against Cloudflare Access; use your local Wrangler installation with synthetic `.dev.vars` and the demo seed for a true end-to-end acceptance pass. **Never deploy or run D1 remote migrations simply to verify a UI change.**
-
-## Milestone M1 — Unified Tasks (2026-10-23)
-
-The Tasks page now supports a responsive **Board** list and a full-width **Sheet** with spreadsheet-like table headers, sorting, sticky headers, resize handles, columns preferences, row navigation, safe inline edits for selected fields, shared filters and independent/project task contexts. Lists show up to 100 tasks per page. The task detail shows authorized activity history. No D1 migrations or role permissions were modified for M1; Events/Announcements are future milestones.
-
-See `docs/M1_UNIFIED_TASKS.md`, `docs/M1_ISSUE_REGISTER.md`, and `docs/M1_VALIDATION.md`. Run `npm run test:offline`, `npm run test:db`, `npx tsc --noEmit`, and (if Chromium + Playwright available) `python test/m1_browser.py`. This is a synthetic component harness, not full Cloudflare Worker browser E2E. The release is not production-approved.
-
-## Milestone M2 — Governance-Aware Events (2026-10-23)
-
-M2 introduces a dedicated Events workspace, an additive `0005_event_governance.sql` migration, temporary accepted event appointments, functional teams, authorized Lead/Co-Lead event approvals, eleven-stage event lifecycle, audit history, optional Project links, and event links to existing M1 Tasks. Regular Members may draft event proposals but **cannot approve** them. Event-specific roles never modify permanent OMS roles.
-
-See `docs/M2_EVENTS_GOVERNANCE.md`, `docs/M2_ISSUE_REGISTER.md`, `docs/M2_VALIDATION.md`, and `docs/M2_HIGH_LEVEL_PROMPT.md` for technical details, pending SOP choices, tests and release gates. **Do not migrate production or deploy** this offline candidate. Locally, run `npm run test:offline`, `npm run test:db`, `npx tsc --noEmit`, and `npx wrangler d1 migrations apply DB --local` before `npm run dev`. Existing `.dev.vars` and `.wrangler` local data are deliberately not packaged.
-
-## M3 — Event Operations and Announcements (development candidate)
-The M3 extension uses `migrations/0006_event_operations_announcements.sql` and `0007_notification_m3_types.sql`. It adds event readiness checklists, evidence submission/verification, operational issues/escalation, schedules, coordination notes, document *references* (not uploads), closure requirements and debriefs, and official announcements scoped to organization or department.
-
-**Development setup on Windows:** preserve your existing `.dev.vars` and `.wrangler/` local database, replace only source files, then run:
+**Prerequisites:** Node.js 22+, `npm` (dependencies installed via `npm ci --ignore-scripts --no-audit --no-fund`), and Python 3.12+.
 
 ```powershell
-npm ci
-npx tsc --noEmit
-npm run test:offline
-npm run test:db
-python test/m3_db_smoke.py
-python test/m3_migration_upgrade.py
-npx wrangler d1 migrations apply DB --local
-npm run dev
+powershell.exe -NoProfile -File scripts/Start-CS213.ps1
 ```
 
-The announcement and event operational routes live under `/api/m3`, while the existing M2 lifecycle stays under `/api/events`. **Never apply remote migrations until 0006/0007 are rehearsed on an approved staging copy.** The revised notification schema in 0007 rebuilds the notifications table and must be backed up in staging before deployment.
+This script generates a local Wrangler configuration (`wrangler.cs213.jsonc` bound to `.cs213-state/`, `APP_ENV="local"`), applies schema migrations `0001`–`0010`, seeds synthetic classroom records (`scripts/m3_local_demo_seed.sql` and `scripts/cs213_demo_seed.sql`), and starts the server at **`http://127.0.0.1:8787`**.
 
-M3 schema keeps independent/project-linked tasks and previous M2 events unchanged. See `docs/M3_IMPLEMENTATION.md`, `docs/M3_ISSUE_REGISTER.md`, `docs/M3_SECURITY_AND_DEPLOYMENT.md`, and `docs/M3_VALIDATION.md`.
+---
 
-### Local UI repair and demo records (M3 follow-up)
+## 3. Sample Classroom Test Accounts (Synthetic Data)
 
-See [`docs/M3_UI_LOCAL_FIX.md`](docs/M3_UI_LOCAL_FIX.md). To populate a **local** D1 database with synthetic Members, Projects, Events and Announcements, first configure `.dev.vars` for local use and apply `--local` migrations, then run:
+| Role | Email | Password | Permissions Demonstrated |
+| --- | --- | --- | --- |
+| **Lead** | `demo.lead@example.test` | `LeadPass#2026` | Full admin: Department CRUD, User creation/roles, Event approvals, Reports & Data Mart ETL |
+| **Co-Lead** | `demo.colead@example.test` | `CoLeadPass#2026` | Operations oversight, User creation, Event approvals, Reports & Data Mart ETL |
+| **Executive** | `demo.executive@example.test` | `ExecPass#2026` | Own-department Task/Project management + appointed Event Team Head |
+| **Member** | `demo.member@example.test` | `MemberPass#2026` | Standard member + appointed Event Director (denied `Reports` & `POST /api/users` with `403`) |
+
+---
+
+## 4. Reproducing Automated Verification
 
 ```powershell
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\Seed-DSCOMS-M3-Local.ps1 -SkipMigrations
+# TypeScript, Node integration & CS 213 suites (116 tests), SQLite invariants (20 tests), CSS syntax, JS syntax, and native D1 tests (9 tests)
+python scripts/validate_release.py --native
+
+# Live loopback browser E2E test (Playwright + Chromium)
+python test/cs213_browser_e2e.py
+
+# Build clean submission archive (dist/dsc-oms-cs213-submission.zip)
+python scripts/package_release.py
 ```
 
-This seed never calls remote D1 and does not delete or replace existing records. The Events workspace has a scoped `Refresh Events` action; it does not reload the application shell.
+---
 
-## M3.5 — UI architecture stabilization (2026-10-24)
+## 5. Project Documentation Deliverables
 
-The UI now separates Browse, Read, and Action: full-page Events workspace, full-page Announcement reading, and modal Task/Project/Department inspection. Modern confirmation/editor modals share the coordinator in `public/js/modal-manager.js`; old task/project forms remain supported through a compatibility bridge. Requests are removed from primary UI only—backend records and migrations are retained.
-
-Documentation: `docs/M35_UI_ARCHITECTURE.md`, `docs/M35_UI_ISSUE_REGISTER.md`, `docs/M35_VALIDATION_AND_READINESS.md`, `docs/M35_ROADMAP.md`.
-
-Local developer checks: `npm run test:offline`, `npm run test:db`, `npx tsc --noEmit`; optional Chromium tests require Python Playwright and Chromium: `python test/m35_browser.py`, `python test/m35_special_cases.py`. These tests use synthetic mocked API responses and do not replace authentic Worker tests. **No production deployment is approved.**
+- **[01_PROJECT_DOCUMENTATION.md](docs/cs213/01_PROJECT_DOCUMENTATION.md)** — Problem, Scope, Requirements (`FR`/`SEC`/`TRX`/`RPT`/`ADV`), Business Rules, Role–Permission Matrix, Architecture & Walkthrough
+- **[02_THREE_LEVEL_ERDS_AND_NORMALIZATION.md](docs/cs213/02_THREE_LEVEL_ERDS_AND_NORMALIZATION.md)** — Three Separate Crow's Foot ERDs (Conceptual, Logical + 3NF, Physical SQLite/D1)
+- **[03_DATA_DICTIONARY.md](docs/cs213/03_DATA_DICTIONARY.md)** — Complete Data Dictionary (`migrations/0001`–`0010`) & Index/Trigger Rationale
+- **[04_TEST_PLAN_AND_EXECUTED_REPORT.md](docs/cs213/04_TEST_PLAN_AND_EXECUTED_REPORT.md)** — Formal Test Plan, Executed `TC01`–`TC12` + `TC-SEC-01` + `TC-DEPT-01` Results & Defect Log
+- **[05_LIVE_DEMO_SCRIPT.md](docs/cs213/05_LIVE_DEMO_SCRIPT.md)** — 10-Minute Live Classroom Demonstration Guide
+- **Complete Compiled Exports (PDF & DOCX):**
+  - [DSC-OMS-CS213-Complete-Documentation.pdf](docs/cs213/exports/DSC-OMS-CS213-Complete-Documentation.pdf)
+  - [DSC-OMS-CS213-Complete-Documentation.docx](docs/cs213/exports/DSC-OMS-CS213-Complete-Documentation.docx)
+- **Machine Evidence:** [cs213_tc01_tc12_results.json](docs/cs213/evidence/cs213_tc01_tc12_results.json) & [cs213_browser_e2e_results.json](docs/cs213/evidence/cs213_browser_e2e_results.json)
