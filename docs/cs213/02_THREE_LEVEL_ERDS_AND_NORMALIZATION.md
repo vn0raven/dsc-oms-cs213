@@ -1,12 +1,16 @@
 # CS 213 – Three Levels of Database Design (Three Separate Crow's Foot ERDs & 3NF)
 
-This document presents the **three separate database design levels** for **DSC OMS (`dsc-oms-cs213`)** strictly in **Crow's Foot ERD notation** (Conceptual, Logical + 3NF, and Physical — no UML), using consistent entity and table names matching `migrations/0001_initial.sql` through `migrations/0010_cs213_auth_and_datamart.sql`.
+**Prepared for:** Prof. Ivy Kim D. Machica (CS 213 – Database Management System)  
+**How This Applies CS 213 Coursework:** Following class design methodology, DSC OMS progresses through **three separate database design models**—strictly using **Crow's Foot ERD notation (zero UML)**:
+1. **Conceptual Crow's Foot ERD:** Captures what organization concepts (`DEPARTMENT`, `USER`, `PROJECT`, `TASK`, `EVENT`, `REQUEST`, `ANNOUNCEMENT`, and analytical facts) exist and how they relate in plain business terms.
+2. **Logical Crow's Foot ERD & 3NF:** Resolves many-to-many relationships into associative tables, assigns primary/foreign keys, and proves normalization through **Third Normal Form (3NF)** (with two deliberate, documented exceptions).
+3. **Physical Crow's Foot ERD (SQLite):** Implements the exact tables, SQLite data types, `NOT NULL` rules, `CHECK` constraints, `ON DELETE RESTRICT` protections, and indexes defined in `migrations/0001`–`0010`.
 
 ---
 
 ## 1. Conceptual ERD (Crow's Foot Notation)
 
-**Question Answered:** *What core business information does the organization need, and how do the main business entities relate?* (Database types, foreign-key columns, and indexes are intentionally omitted.)
+**CS 213 Purpose:** *What core business information does our student organization need to store, and what real-world cardinalities connect them?* (Technical column types, foreign-key columns, and indexes are intentionally omitted at Level 1.)
 
 ```mermaid
 erDiagram
@@ -49,7 +53,7 @@ erDiagram
 
 ## 2. Logical ERD & Normalization through 3NF
 
-**Question Answered:** *How is the data structured into normalized relations with primary keys, foreign keys, and associative entities to eliminate redundancy?*
+**CS 213 Purpose:** *How is the conceptual model translated into normalized relational tables with primary keys, foreign keys, and junction tables to eliminate update, insert, and delete anomalies?*
 
 ### 2.1 Logical ERD (Crow's Foot with Keys & Associative Entities)
 
@@ -235,11 +239,11 @@ erDiagram
 
 ## 3. Physical ERD (Crow's Foot Notation — SQLite Relational Schema)
 
-**Question Answered:** *How is the database physically implemented in SQLite, including exact column types, nullability, defaults, constraints, and indexes matching `migrations/0001`–`0010`?*
+**CS 213 Purpose:** *How are our normalized logical relations physically built in SQLite (`0001`–`0010`), including exact storage types, nullability, default values, `CHECK` domains, `ON DELETE RESTRICT` referential rules, and indexes?*
 
 **Physical Crow's Foot Legend:**
 - `PK` = Primary Key, `FK` = Foreign Key, `UK` = Unique Key/Constraint, `NN` = `NOT NULL`.
-- All timestamps are ISO-8601 UTC strings stored as `TEXT`; SQLite `PRAGMA foreign_keys = ON` and database triggers enforce state-transition and authorization invariants inside atomic transactions.
+- All timestamps use ISO-8601 UTC text strings; `PRAGMA foreign_keys = ON` and database triggers protect referential integrity and lifecycle transitions inside atomic transactions.
 
 ### 3.1 Core Identity, Auth, Projects, Requests & Tasks Physical Tables (Crow's Foot)
 
@@ -355,7 +359,7 @@ erDiagram
     TEXT request_id PK "NN"
     TEXT row_id PK "NN"
     TEXT payload_hash "NN"
-    TEXT task_id FK "NN ON DELETE CASCADE"
+    TEXT task_id FK "NN ON DELETE RESTRICT"
     TEXT created_at "NN"
   }
 
@@ -444,7 +448,7 @@ erDiagram
   }
 
   event_task_creation_requests {
-    TEXT event_id PK,FK "NN ON DELETE CASCADE"
+    TEXT event_id PK,FK "NN ON DELETE RESTRICT"
     TEXT actor_id PK,FK "NN"
     TEXT request_id PK "NN"
     TEXT payload_hash "NN"
@@ -456,12 +460,14 @@ erDiagram
 
   event_issues {
     TEXT id PK
-    TEXT event_id FK "NN ON DELETE CASCADE"
+    TEXT event_id FK "NN ON DELETE RESTRICT"
     TEXT title "NN"
+    TEXT description "nullable"
     TEXT severity "NN CHECK Low|Medium|High|Urgent"
     TEXT status "NN CHECK Open|Escalated|Resolved"
     TEXT owner_id FK "nullable"
     TEXT due_at "nullable"
+    TEXT resolution "nullable"
     TEXT created_by FK "NN"
     TEXT created_at "NN"
     TEXT updated_at "NN"
