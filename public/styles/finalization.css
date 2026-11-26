@@ -1,0 +1,30 @@
+/* Event and Tasks refinements; loaded after existing component owners. */
+.event-team-card{text-align:left;font:inherit;color:var(--text);background:var(--surface);cursor:pointer;min-width:0;overflow-wrap:anywhere}
+.event-team-card:hover,.event-team-card:focus-visible{border-color:var(--accent,#ee2737)}
+.event-task-open{white-space:normal;text-align:left;overflow-wrap:anywhere}
+.event-task-group{padding-block:12px;border-top:1px solid var(--border)}
+.event-operations-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:18px;align-items:start}
+.event-ops-panel{min-width:0;border:1px solid var(--border);border-radius:10px;padding:16px}
+.event-ops-panel .event-pane-toolbar{margin:0 0 12px;flex-wrap:wrap}
+.event-ops-panel .empty{min-height:0;padding:14px 0}
+.event-note{padding:12px 0;border-top:1px solid var(--border);overflow-wrap:anywhere}
+.event-note summary{cursor:pointer;line-height:1.5}
+.event-appointment p,.event-task-row p{white-space:pre-wrap;overflow-wrap:anywhere}
+.task-toolbar-actions{display:flex;align-items:center;flex-wrap:wrap;gap:10px;padding:0 16px 14px}
+.task-filter-disclosure{display:contents}
+.task-filter-disclosure>summary{cursor:pointer;list-style-position:inside;width:fit-content;min-height:var(--control-height);padding:8px 12px;border:1px solid var(--border);border-radius:var(--control-radius);background:var(--surface);color:var(--text)}
+.task-filter-disclosure[open]>summary{border-color:var(--dsc-red);background:var(--dsc-red-soft)}
+.task-filter-disclosure>.task-advanced-controls{flex-basis:100%;width:100%;order:1}
+.task-filter-disclosure:not([open])>.task-advanced-controls{display:none}
+.task-tools{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin:0}
+.task-filter-chips{display:flex;flex-wrap:wrap;gap:8px;padding:0 16px 12px}
+.task-filter-chips:empty{display:none}.task-filter-chips .button{font-size:13px;white-space:normal;overflow-wrap:anywhere}
+.task-tools .task-column-picker{position:relative;align-self:center}.task-tools .task-column-picker-menu{z-index:20}
+.task-tools .task-column-picker>summary{min-height:var(--control-height);padding:8px 12px;border:1px solid var(--border);border-radius:var(--control-radius);background:var(--surface);color:var(--text);cursor:pointer}
+.task-toolbar-actions :focus-visible{outline:2px solid var(--dsc-red);outline-offset:3px}
+@media(max-width:600px){.task-toolbar-actions{gap:8px;padding-inline:12px}.event-pane-toolbar .button{min-height:44px}.event-task-row{align-items:flex-start}.event-ops-panel{padding:12px}}
+
+[data-import-preview]{white-space:pre-wrap;overflow-wrap:anywhere;max-height:300px;overflow:auto}
+[data-import-mapping]{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:12px}
+
+.event-fullpage .event-detail{min-height:0}.event-tab-content>.empty{min-height:0;padding:24px 0}

@@ -1,0 +1,235 @@
+{
+  "executedAt": "2026-11-26T05:51:22.970Z",
+  "testSuite": "test/node/cs213-sa3.test.mjs",
+  "cases": {
+    "TC03": {
+      "status": "PASS",
+      "wrongPasswordStatus": 401,
+      "unauthenticatedProtectedStatus": 401,
+      "validLoginStatus": 200,
+      "postLogoutProtectedStatus": 401,
+      "revokedSessionCount": 1
+    },
+    "TC01": {
+      "status": "PASS",
+      "createdTaskId": "task_b805fca4-6783-4131-be98-063a61a9c225",
+      "updatedDescription": "Updated core workflow description"
+    },
+    "TC02": {
+      "status": "PASS",
+      "duplicateRejectedStatus": 409,
+      "userCountBefore": 6,
+      "userCountAfter": 6
+    },
+    "TC04": {
+      "status": "PASS",
+      "memberCreateUserStatus": 403,
+      "memberReportsStatus": 403,
+      "leadCreateUserStatus": 201,
+      "testClerkCountAfterLeadCreate": 1
+    },
+    "TC-SEC-01": {
+      "status": "PASS",
+      "memberCreateUserStatus": 403,
+      "memberReportsStatus": 403,
+      "leadCreateUserStatus": 201,
+      "testClerkCountAfterLeadCreate": 1
+    },
+    "TC05": {
+      "status": "PASS",
+      "httpStatus": 201,
+      "before": {
+        "tasks": 10,
+        "links": 1,
+        "receipts": 0,
+        "audit": 8
+      },
+      "after": {
+        "tasks": 11,
+        "links": 2,
+        "receipts": 1,
+        "audit": 10
+      }
+    },
+    "TC06": {
+      "status": "PASS",
+      "httpStatus": 409,
+      "errorCode": "EVENT_CONFLICT",
+      "before": {
+        "tasks": 11,
+        "links": 2,
+        "receipts": 1,
+        "audit": 10
+      },
+      "after": {
+        "tasks": 11,
+        "links": 2,
+        "receipts": 1,
+        "audit": 10
+      }
+    },
+    "TC07": {
+      "status": "PASS",
+      "concurrentStatuses": [
+        201,
+        409
+      ],
+      "openDirectorCountInDb": 1
+    },
+    "TC08": {
+      "status": "PASS",
+      "octoberCount": 6,
+      "novemberCount": 4,
+      "excludedArchivedFromDefault": true
+    },
+    "TC09": {
+      "status": "PASS",
+      "totalNonArchivedTasks": 10,
+      "exclusions": {
+        "excludedArchivedTasks": 1,
+        "excludedDraftProjects": 1,
+        "excludedDraftEvents": 1
+      }
+    },
+    "TC10": {
+      "status": "PASS",
+      "asOfDate": "2026-11-25",
+      "overdueCount": 6,
+      "unassignedPriorityCount": 2,
+      "unresolvedHighEventIssuesCount": 1
+    },
+    "TC11": {
+      "status": "PASS",
+      "etlRunId": "dm_run_c14bb522-31af-46f1-a517-5c213f162138",
+      "oltpNonArchivedTaskCount": 10,
+      "martTotalTaskCount": 10,
+      "excludedArchivedTaskCount": 1,
+      "reconciled": true,
+      "byMonth": [
+        {
+          "monthKey": "2026-11",
+          "oltpCount": 4,
+          "martCount": 4,
+          "matches": true
+        },
+        {
+          "monthKey": "2026-10",
+          "oltpCount": 6,
+          "martCount": 6,
+          "matches": true
+        }
+      ]
+    },
+    "TC12": {
+      "status": "PASS",
+      "totalAuditRows": 13,
+      "verifiedActions": [
+        "AUTH_LOGIN_FAILED",
+        "AUTH_LOGIN_SUCCESS",
+        "AUTH_LOGOUT",
+        "EVENT_TASK_CREATED",
+        "USER_CREATED",
+        "DATAMART_ETL_LOADED"
+      ],
+      "sampleRows": [
+        {
+          "action": "DATAMART_ETL_LOADED",
+          "actor_user_id": "demo_user_lead",
+          "actor_role": "Lead",
+          "reference_type": "DATAMART",
+          "reference_id": "dm_run_c14bb522-31af-46f1-a517-5c213f162138",
+          "occurred_at": "2026-11-26T05:51:23.340Z"
+        },
+        {
+          "action": "EVENT_APPOINTMENT_PROPOSED",
+          "actor_user_id": "demo_user_lead",
+          "actor_role": "Lead",
+          "reference_type": "EVENT",
+          "reference_id": "m3demo_event_talk",
+          "occurred_at": "2026-11-26T05:51:23.332Z"
+        },
+        {
+          "action": "AUTH_LOGIN_SUCCESS",
+          "actor_user_id": "demo_user_colead",
+          "actor_role": "Co-Lead",
+          "reference_type": "USER",
+          "reference_id": "demo_user_colead",
+          "occurred_at": "2026-11-26T05:51:23.305Z"
+        },
+        {
+          "action": "TASK_CREATED",
+          "actor_user_id": "demo_user_member",
+          "actor_role": "Member",
+          "reference_type": "TASK",
+          "reference_id": "task_c8c2a49e-d20b-48e3-bb8f-d5e95ce94e76",
+          "occurred_at": "2026-11-26T05:51:23.298Z"
+        },
+        {
+          "action": "EVENT_TASK_CREATED",
+          "actor_user_id": "demo_user_member",
+          "actor_role": "Member",
+          "reference_type": "EVENT",
+          "reference_id": "m3demo_event_workshop",
+          "occurred_at": "2026-11-26T05:51:23.298Z"
+        },
+        {
+          "action": "USER_CREATED",
+          "actor_user_id": "demo_user_lead",
+          "actor_role": "Lead",
+          "reference_type": "USER",
+          "reference_id": "usr_195ed8ea-fd8d-4dc7-94b3-94745c37dc44",
+          "occurred_at": "2026-11-26T05:51:23.296Z"
+        }
+      ]
+    },
+    "DEPT_CRUD": {
+      "status": "PASS",
+      "createdId": "dept_8923af5f-60d1-4838-bfdf-f044ae940ed8",
+      "nonLead403Checked": [
+        "Co-Lead",
+        "Executive",
+        "Member"
+      ],
+      "duplicateRejectedStatus": 409,
+      "renamedTo": "CS213 External Affairs",
+      "ownDeptDeactivateStatus": 409,
+      "deactivatedStatus": "Inactive",
+      "reactivatedStatus": "Active",
+      "auditActions": [
+        "DEPARTMENT_STATUS_CHANGED",
+        "DEPARTMENT_STATUS_CHANGED",
+        "DEPARTMENT_UPDATED",
+        "DEPARTMENT_CREATED"
+      ]
+    },
+    "AUDIT_FIXES": {
+      "status": "PASS",
+      "aud01LoginAfterCreateStatus": 200,
+      "aud01WrongPasswordStatus": 401,
+      "aud03OldCookieAfterReactivateStatus": 401,
+      "aud02ReconciledTotals": {
+        "summaryTotal": 8,
+        "detailedTotal": 8,
+        "dmOltpTotal": 8,
+        "dmMartTotal": 8
+      },
+      "aud04TestingStatusLogged": true
+    },
+    "DEEP_AUDIT_FIXES": {
+      "status": "PASS",
+      "log01DeleteBlockedStatus": 409,
+      "log01ErrorCode": "PROJECT_DELETE_NOT_SAFE",
+      "log02WorkloadSum": 8,
+      "log02SummaryTotal": 8,
+      "log03ConcurrentDebriefStatuses": [
+        201,
+        409
+      ]
+    },
+    "P3_DIMENSION_SYNC": {
+      "status": "PASS",
+      "staleDimensionsSynced": false,
+      "refreshedDimensionsSynced": true
+    }
+  }
+}

@@ -1,0 +1,2 @@
+playwright==1.65.2
+tinycss2==1.5.1

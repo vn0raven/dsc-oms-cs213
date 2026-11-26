@@ -1,0 +1,1244 @@
+/* =====================================================
+   DSC OMS — DEFINITIVE THEME / HEADER REPAIR
+   Loaded last intentionally.
+   ===================================================== */
+
+
+/* =====================================================
+   LIGHT
+   ===================================================== */
+
+:root[data-theme="light"] {
+  color-scheme: light;
+
+  --page-bg: #f6f7f8;
+
+  --surface: #ffffff;
+  --surface-soft: #f3f4f5;
+  --surface-hover: #eceef0;
+
+  --text: #111318;
+  --text-soft: #4f5560;
+  --text-muted: #616975;
+
+  --border: #dfe2e6;
+
+  --input-bg: #ffffff;
+
+  --shadow-sm:
+    0 1px 2px rgba(0,0,0,.04);
+
+  --shadow-md:
+    0 12px 30px rgba(0,0,0,.10);
+}
+
+
+/* =====================================================
+   DARK
+   ===================================================== */
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --page-bg: #0d0f12;
+
+  --surface: #15181c;
+  --surface-soft: #1b1f24;
+  --surface-hover: #22272e;
+
+  --text: #f4f5f6;
+  --text-soft: #bdc2ca;
+  --text-muted: #a3acba;
+
+  --border: #2b3037;
+
+  --input-bg: #111419;
+
+  --shadow-sm:
+    0 1px 2px rgba(0,0,0,.20);
+
+  --shadow-md:
+    0 15px 35px rgba(0,0,0,.38);
+}
+
+
+/* =====================================================
+   WHOLE WORKSPACE
+   ===================================================== */
+
+html,
+body,
+#app,
+.app-shell,
+.main,
+.main-content {
+  background:
+    var(--page-bg) !important;
+
+  color:
+    var(--text) !important;
+}
+
+#page-content,
+.page-content,
+.content {
+  background:
+    var(--page-bg) !important;
+
+  color:
+    var(--text) !important;
+}
+
+
+/*
+ * Sidebar + topbar remain black in
+ * both themes as part of DSC branding.
+ */
+
+.sidebar {
+  background:
+    #0d0f12 !important;
+}
+
+.topbar {
+  background:
+    #101216 !important;
+
+  border-bottom:
+    2px solid #ed1c24 !important;
+}
+
+
+/* =====================================================
+   LIGHT/DARK SURFACES
+   ===================================================== */
+
+#page-content .card,
+#page-content .panel,
+#page-content .dashboard-card,
+#page-content .summary-card,
+#page-content .stat-card,
+#page-content .metric-card,
+#page-content .kpi-card,
+#page-content .overview-card,
+#page-content .quick-action,
+#page-content .quick-action-card,
+#page-content .task-detail,
+#page-content .request-detail,
+#page-content .project-detail,
+#page-content .task-sheet-wrap,
+.profile-menu,
+.notification-popover,
+.task-column-picker-menu,
+.confirm-modal,
+.modal,
+.modal-content {
+  background:
+    var(--surface) !important;
+
+  border-color:
+    var(--border) !important;
+
+  color:
+    var(--text) !important;
+}
+
+
+/*
+ * Existing dashboard tables/panels.
+ */
+
+#page-content table,
+#page-content thead,
+#page-content tbody,
+#page-content tr,
+#page-content td,
+#page-content th {
+  border-color:
+    var(--border) !important;
+}
+
+#page-content th {
+  color:
+    var(--text-muted);
+}
+
+#page-content td {
+  color:
+    var(--text-soft);
+}
+
+
+/* =====================================================
+   TEXT
+   ===================================================== */
+
+#page-content h1,
+#page-content h2,
+#page-content h3,
+#page-content h4,
+#page-content strong {
+  color:
+    var(--text);
+}
+
+#page-content p,
+#page-content small,
+#page-content .muted,
+#page-content .subtitle {
+  color:
+    var(--text-muted);
+}
+
+
+/* =====================================================
+   INPUTS
+   ===================================================== */
+
+#page-content input:not(
+  [type="checkbox"]
+):not(
+  [type="radio"]
+),
+#page-content select,
+#page-content textarea,
+.profile-menu input,
+.notification-popover input {
+  background:
+    var(--input-bg) !important;
+
+  border-color:
+    var(--border) !important;
+
+  color:
+    var(--text) !important;
+}
+
+#page-content input::placeholder,
+#page-content textarea::placeholder {
+  color:
+    var(--text-muted) !important;
+}
+
+
+/* =====================================================
+   TOPBAR ACTIONS
+   ===================================================== */
+
+.topbar-right {
+  display: flex !important;
+
+  align-items: center;
+
+  gap: 8px;
+}
+
+.dsc-header-actions {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  flex: 0 0 auto;
+}
+
+
+/* Theme selector */
+
+.topbar-theme-control {
+  height: 34px;
+
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  padding:
+    0 8px;
+
+  border:
+    1px solid rgba(
+      255,
+      255,
+      255,
+      .10
+    );
+
+  border-radius:
+    7px;
+
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      .04
+    );
+
+  color:
+    #fff;
+}
+
+.theme-indicator {
+  width: 8px;
+  height: 8px;
+
+  flex: 0 0 auto;
+
+  border:
+    1px solid rgba(
+      255,
+      255,
+      255,
+      .65
+    );
+
+  border-radius:
+    50%;
+}
+
+.theme-indicator[
+  data-resolved-theme="light"
+] {
+  background:
+    #ffffff;
+}
+
+.theme-indicator[
+  data-resolved-theme="dark"
+] {
+  background:
+    #ed1c24;
+
+  border-color:
+    #ed1c24;
+}
+
+.topbar-theme-control select {
+  width: auto !important;
+
+  min-width: 65px !important;
+
+  height: 30px !important;
+
+  padding:
+    0 18px 0 0 !important;
+
+  border:
+    0 !important;
+
+  outline:
+    0 !important;
+
+  background:
+    transparent !important;
+
+  color:
+    #ffffff !important;
+
+  font-size:
+    14px;
+
+  font-weight:
+    650;
+
+  cursor:
+    pointer;
+
+  box-shadow:
+    none !important;
+}
+
+.topbar-theme-control option {
+  background:
+    #15181c;
+
+  color:
+    #ffffff;
+}
+
+
+/* =====================================================
+   BELL
+   ===================================================== */
+
+.topbar-notifications {
+  position:
+    relative;
+
+  display:
+    inline-flex;
+}
+
+.topbar-notification-button {
+  position:
+    relative;
+
+  width:
+    36px !important;
+
+  height:
+    36px !important;
+
+  display:
+    inline-flex !important;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  padding:
+    0 !important;
+
+  border:
+    1px solid rgba(
+      255,
+      255,
+      255,
+      .10
+    ) !important;
+
+  border-radius:
+    7px !important;
+
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      .04
+    ) !important;
+
+  color:
+    #ffffff !important;
+
+  cursor:
+    pointer;
+}
+
+.topbar-notification-button:hover {
+  border-color:
+    rgba(
+      237,
+      28,
+      36,
+      .50
+    ) !important;
+
+  background:
+    rgba(
+      237,
+      28,
+      36,
+      .12
+    ) !important;
+}
+
+
+/*
+ * Pure CSS bell.
+ * No PNG/SVG/image assets.
+ */
+
+.dsc-css-bell {
+  position:
+    relative;
+
+  width:
+    13px;
+
+  height:
+    14px;
+
+  display:
+    block;
+}
+
+.dsc-css-bell::before {
+  content:
+    "";
+
+  position:
+    absolute;
+
+  top:
+    1px;
+
+  left:
+    2px;
+
+  width:
+    9px;
+
+  height:
+    10px;
+
+  border:
+    1.5px solid
+    currentColor;
+
+  border-radius:
+    7px 7px 4px 4px;
+}
+
+.dsc-css-bell::after {
+  content:
+    "";
+
+  position:
+    absolute;
+
+  bottom:
+    0;
+
+  left:
+    5px;
+
+  width:
+    3px;
+
+  height:
+    2px;
+
+  border-radius:
+    0 0 3px 3px;
+
+  background:
+    currentColor;
+}
+
+
+/* unread count */
+
+.topbar-notification-button
+.notification-nav-badge {
+  position:
+    absolute !important;
+
+  top:
+    -5px !important;
+
+  right:
+    -5px !important;
+
+  min-width:
+    16px;
+
+  height:
+    16px;
+
+  display:
+    inline-flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  padding:
+    0 4px;
+
+  border:
+    2px solid #101216;
+
+  border-radius:
+    99px;
+
+  background:
+    #ed1c24 !important;
+
+  color:
+    #fff !important;
+
+  font-size:
+    13px;
+
+  font-weight:
+    800;
+
+  line-height:
+    1;
+}
+
+
+/* =====================================================
+   NOTIFICATION POPOVER
+   ===================================================== */
+
+.notification-popover {
+  position:
+    absolute;
+
+  top:
+    calc(
+      100% + 10px
+    );
+
+  right:
+    0;
+
+  z-index:
+    100;
+
+  width:
+    min(
+      380px,
+      calc(
+        100vw - 24px
+      )
+    );
+
+  overflow:
+    hidden;
+
+  border:
+    1px solid
+    var(--border);
+
+  border-radius:
+    10px;
+
+  background:
+    var(--surface);
+
+  box-shadow:
+    var(--shadow-md);
+}
+
+.notification-popover[hidden] {
+  display:
+    none !important;
+}
+
+.notification-popover-header {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    space-between;
+
+  gap:
+    12px;
+
+  padding:
+    13px 14px;
+
+  border-bottom:
+    1px solid
+    var(--border);
+}
+
+.notification-popover-header > div {
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  gap:
+    2px;
+}
+
+.notification-popover-header strong {
+  color:
+    var(--text);
+}
+
+.notification-popover-header span {
+  color:
+    var(--text-muted);
+
+  font-size:
+    13px;
+}
+
+.notification-popover-mark-all,
+.notification-view-all {
+  border:
+    0;
+
+  background:
+    transparent;
+
+  color:
+    #ed1c24;
+
+  font-size:
+    14px;
+
+  font-weight:
+    700;
+
+  cursor:
+    pointer;
+}
+
+.notification-preview-list {
+  max-height:
+    370px;
+
+  overflow-y:
+    auto;
+}
+
+.notification-preview-item {
+  width:
+    100%;
+
+  display:
+    flex;
+
+  align-items:
+    flex-start;
+
+  gap:
+    9px;
+
+  padding:
+    12px 14px;
+
+  border:
+    0;
+
+  border-bottom:
+    1px solid
+    var(--border);
+
+  background:
+    var(--surface);
+
+  color:
+    var(--text);
+
+  text-align:
+    left;
+
+  cursor:
+    pointer;
+}
+
+.notification-preview-item:hover {
+  background:
+    var(--surface-hover);
+}
+
+.notification-preview-item.unread {
+  border-left:
+    3px solid
+    #ed1c24;
+
+  background:
+    rgba(
+      237,
+      28,
+      36,
+      .055
+    );
+}
+
+.notification-preview-dot {
+  width:
+    7px;
+
+  padding-top:
+    4px;
+}
+
+.notification-preview-dot i {
+  display:
+    block;
+
+  width:
+    6px;
+
+  height:
+    6px;
+
+  border-radius:
+    50%;
+
+  background:
+    #ed1c24;
+}
+
+.notification-preview-content {
+  min-width:
+    0;
+
+  display:
+    flex;
+
+  flex:
+    1;
+
+  flex-direction:
+    column;
+
+  gap:
+    3px;
+}
+
+.notification-preview-title {
+  color:
+    var(--text);
+
+  font-size:
+    14px;
+}
+
+.notification-preview-message {
+  color:
+    var(--text-soft);
+
+  font-size:
+    14px;
+
+  line-height:
+    1.45;
+}
+
+.notification-preview-time {
+  color:
+    var(--text-muted);
+
+  font-size:
+    13px;
+}
+
+.notification-popover-loading,
+.notification-popover-empty {
+  padding:
+    25px 16px;
+
+  color:
+    var(--text-muted);
+
+  text-align:
+    center;
+
+  font-size:
+    14px;
+}
+
+.notification-popover-empty {
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  gap:
+    4px;
+}
+
+.notification-popover-empty strong {
+  color:
+    var(--text);
+}
+
+.notification-popover-footer {
+  padding:
+    7px;
+
+  border-top:
+    1px solid
+    var(--border);
+
+  background:
+    var(--surface-soft);
+}
+
+.notification-view-all {
+  width:
+    100%;
+
+  padding:
+    7px;
+}
+
+
+/* =====================================================
+   DSC RED INTERACTIONS
+   ===================================================== */
+
+
+
+
+
+
+
+.sidebar
+.nav-item.active::before,
+.sidebar
+.nav-item[aria-current="page"]::before {
+  background:
+    #ed1c24 !important;
+}
+
+
+/* =====================================================
+   MOBILE
+   ===================================================== */
+
+@media (
+  max-width: 700px
+) {
+  .topbar-theme-control {
+    padding:
+      0 5px;
+  }
+
+  .topbar-theme-control select {
+    min-width:
+      56px !important;
+
+    font-size:
+      13px;
+  }
+
+  .notification-popover {
+    position:
+      fixed;
+
+    top:
+      61px;
+
+    right:
+      9px;
+
+    left:
+      9px;
+
+    width:
+      auto;
+  }
+}
+/* DSC_HEADER_HARD_FIX */
+
+.topbar-right {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 8px !important;
+  overflow: visible !important;
+}
+
+.dsc-header-actions {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  flex: 0 0 auto !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.dsc-theme-switcher {
+  height: 34px;
+  display: inline-flex !important;
+  align-items: center;
+  gap: 2px;
+  padding: 3px;
+
+  border:
+    1px solid rgba(255,255,255,.12);
+
+  border-radius: 8px;
+
+  background:
+    rgba(255,255,255,.04);
+}
+
+.dsc-theme-choice {
+  height: 26px;
+  min-width: 48px;
+
+  padding: 0 8px;
+
+  border: 0;
+  border-radius: 5px;
+
+  background:
+    transparent;
+
+  color:
+    #8e949e;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    background .15s ease,
+    color .15s ease;
+}
+
+.dsc-theme-choice:hover {
+  color: #ffffff;
+
+  background:
+    rgba(255,255,255,.06);
+}
+
+.dsc-theme-choice.active {
+  background:
+    var(--dsc-action-red) !important;
+
+  color:
+    #ffffff !important;
+}
+
+
+/* Bell */
+
+.topbar-notifications {
+  position: relative !important;
+  display: inline-flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.topbar-notification-button {
+  position: relative !important;
+
+  display: inline-flex !important;
+
+  width: 34px !important;
+  height: 34px !important;
+
+  align-items: center !important;
+  justify-content: center !important;
+
+  visibility: visible !important;
+  opacity: 1 !important;
+
+  border:
+    1px solid rgba(255,255,255,.12) !important;
+
+  border-radius:
+    7px !important;
+
+  background:
+    rgba(255,255,255,.04) !important;
+
+  color:
+    #ffffff !important;
+}
+
+.topbar-notification-button:hover {
+  border-color:
+    rgba(237,28,36,.55) !important;
+
+  background:
+    rgba(237,28,36,.12) !important;
+}
+
+
+/* CSS bell */
+
+.dsc-css-bell {
+  position: relative;
+
+  display: block !important;
+
+  width: 13px;
+  height: 14px;
+
+  color: #ffffff;
+}
+
+.dsc-css-bell::before {
+  content: "";
+
+  position: absolute;
+
+  top: 1px;
+  left: 2px;
+
+  width: 9px;
+  height: 10px;
+
+  border:
+    1.5px solid currentColor;
+
+  border-radius:
+    7px 7px 4px 4px;
+}
+
+.dsc-css-bell::after {
+  content: "";
+
+  position: absolute;
+
+  bottom: 0;
+  left: 5px;
+
+  width: 3px;
+  height: 2px;
+
+  border-radius:
+    0 0 3px 3px;
+
+  background:
+    currentColor;
+}
+
+
+/* Active unread badge */
+
+.topbar-notification-button
+.notification-nav-badge {
+  position: absolute !important;
+
+  top: -6px !important;
+  right: -6px !important;
+
+  z-index: 10;
+
+  min-width: 17px;
+  height: 17px;
+
+  display: flex !important;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 0 4px;
+
+  border:
+    2px solid #101216;
+
+  border-radius: 99px;
+
+  background:
+    #ed1c24 !important;
+
+  color:
+    #ffffff !important;
+
+  font-size: 13px;
+  font-weight: 900;
+}
+
+
+/* LIGHT MUST BE LIGHT */
+
+html[data-theme="light"],
+html[data-theme="light"] body,
+html[data-theme="light"] #app,
+html[data-theme="light"] .app-shell,
+html[data-theme="light"] .main,
+html[data-theme="light"] .main-content,
+html[data-theme="light"] #page-content {
+  background:
+    #f6f7f8 !important;
+
+  color:
+    #111318 !important;
+}
+
+html[data-theme="light"]
+#page-content .card,
+html[data-theme="light"]
+#page-content .panel,
+html[data-theme="light"]
+#page-content .task-detail,
+html[data-theme="light"]
+#page-content .request-detail,
+html[data-theme="light"]
+#page-content .project-detail {
+  background:
+    #ffffff !important;
+
+  color:
+    #111318 !important;
+
+  border-color:
+    #dfe2e6 !important;
+}
+
+html[data-theme="light"]
+#page-content h1,
+html[data-theme="light"]
+#page-content h2,
+html[data-theme="light"]
+#page-content h3,
+html[data-theme="light"]
+#page-content strong {
+  color:
+    #111318 !important;
+}
+
+html[data-theme="light"]
+#page-content p,
+html[data-theme="light"]
+#page-content td {
+  color:
+    #525862;
+}
+
+
+/* DARK MUST BE DARK */
+
+html[data-theme="dark"],
+html[data-theme="dark"] body,
+html[data-theme="dark"] #app,
+html[data-theme="dark"] .app-shell,
+html[data-theme="dark"] .main,
+html[data-theme="dark"] .main-content,
+html[data-theme="dark"] #page-content {
+  background:
+    #0d0f12 !important;
+
+  color:
+    #f5f6f7 !important;
+}
+
+html[data-theme="dark"]
+#page-content .card,
+html[data-theme="dark"]
+#page-content .panel,
+html[data-theme="dark"]
+#page-content .task-detail,
+html[data-theme="dark"]
+#page-content .request-detail,
+html[data-theme="dark"]
+#page-content .project-detail {
+  background:
+    #15181c !important;
+
+  color:
+    #f5f6f7 !important;
+
+  border-color:
+    #2b3037 !important;
+}
+
+html[data-theme="dark"]
+#page-content h1,
+html[data-theme="dark"]
+#page-content h2,
+html[data-theme="dark"]
+#page-content h3,
+html[data-theme="dark"]
+#page-content strong {
+  color:
+    #f5f6f7 !important;
+}
+
+
+@media (max-width: 760px) {
+  .dsc-theme-choice {
+    min-width: 38px;
+    padding: 0 5px;
+    font-size: 13px;
+  }
+}

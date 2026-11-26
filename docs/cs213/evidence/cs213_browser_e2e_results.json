@@ -1,0 +1,33 @@
+{
+  "executedAt": "2026-11-26T05:52:50Z",
+  "checks": [
+    {
+      "step": "wrong_password_denied",
+      "errorText": "Invalid email or password.",
+      "passed": true
+    },
+    {
+      "step": "lead_login_success",
+      "passed": true
+    },
+    {
+      "step": "reports_and_datamart_reconciled",
+      "badge": "RECONCILED (Mart == OLTP: 8)",
+      "passed": true
+    },
+    {
+      "step": "lead_department_manage_visible",
+      "passed": true
+    },
+    {
+      "step": "logout_and_protected_reload",
+      "passed": true
+    },
+    {
+      "step": "member_restricted_reports_and_dept_403",
+      "reportsApiStatus": 403,
+      "deptPostStatus": 403,
+      "passed": true
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+/* M3 standalone components use existing semantic surfaces and control tokens. */
+.m3-form{display:grid;gap:16px;padding:20px;margin-block:18px}
+.m3-form label{display:grid;gap:7px;font-size:14px}
+.m3-form input,.m3-form select,.m3-form textarea{width:100%;min-width:0;background:var(--surface,#15181d);color:var(--text,#f4f4f5);border:1px solid var(--border,#363942);border-radius:8px;padding:12px;font:inherit}
+.m3-announcements{display:grid;gap:14px;margin-block:16px}
+.m3-notice{padding:20px;display:grid;gap:12px;overflow-wrap:anywhere}
+.m3-notice header{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.m3-notice p{white-space:pre-wrap;line-height:1.55;margin:0}
+.m3-notice small{opacity:.8}
+@media(max-width:600px){.m3-form,.m3-notice{padding:14px}}
+
+.m3-dashboard-summary{display:grid;gap:14px;margin-block:20px}
+.m3-upcoming,.m3-report-summary{padding:20px}
+.m3-upcoming p{margin:9px 0;overflow-wrap:anywhere}
+.m3-report-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:12px;margin-top:14px}
+.m3-report-stats .event-info{padding:12px;border:1px solid var(--border,#363942);border-radius:8px;display:grid;gap:8px}
+.m3-report-stats strong{font-size:22px}
+/* Scoped M3 refinements; no global section or header overrides. */
+.m3-notice .status,.event-detail-head>.status,.event-list-row>.status{background:var(--info-soft);color:var(--info);border:1px solid var(--border);padding:3px 9px;border-radius:999px;font-size:12px;font-weight:600}
+.event-task-row small{display:block;line-height:1.5;margin-top:5px;color:var(--muted,#9da4ad)}
+.event-task-row{gap:12px;align-items:center;min-height:62px}
+@media(max-width:768px){.event-task-row{flex-wrap:wrap}.event-task-row button{min-height:40px}}
+
+.m3-checkbox{display:flex!important;align-items:center;gap:10px}
+.m3-checkbox input{width:18px;height:18px}
+.m3-search-label{display:grid;gap:8px;margin-top:16px;font-size:14px}
+.m3-search-label input{width:100%;max-width:520px;padding:12px;border-radius:8px;background:var(--surface,#15181d);color:var(--text,#f4f4f5);border:1px solid var(--border,#363942)}
+.m3-notice[hidden]{display:none}
+/* M3.5 shared modal component: one scoped owner, theme-token based. */
+.oms-dialog-overlay{position:fixed;inset:0;z-index:3000;display:flex;justify-content:center;align-items:center;padding:clamp(8px,3vw,24px);overflow:auto;background:rgba(0,0,0,.64)}
+.oms-dialog{width:min(100%,700px);max-height:min(92dvh,960px);background:var(--surface,#15181d);color:var(--text,#f7f7f9);border:1px solid var(--border,#373b42);border-radius:14px;box-shadow:0 20px 70px rgba(0,0,0,.35);display:flex;flex-direction:column;min-width:0;overflow:hidden}
+.oms-dialog-confirm{max-width:460px}.oms-dialog-detail{max-width:980px}.oms-dialog-large{max-width:900px}
+.oms-dialog-header{padding:18px 22px;border-bottom:1px solid var(--border,#373b42);display:flex;justify-content:space-between;align-items:center;gap:15px;flex-shrink:0}
+.oms-dialog-header h2{margin:0;font-size:21px;line-height:1.35}.oms-dialog-header .modal-close{position:static;flex-shrink:0;cursor:pointer}
+.oms-dialog-body{overflow-y:auto;overscroll-behavior:contain;min-height:0;padding:20px 22px}
+.oms-dialog-body>.task-detail,.oms-dialog-body>.project-detail,.oms-dialog-body>.department-detail-panel{display:block!important;width:100%;max-width:none;position:static;inset:auto;min-height:0;margin:0;box-shadow:none;border:0;padding:0}
+.oms-dialog-body .oms-dialog-form{display:flex;flex-direction:column;min-height:0;gap:14px}
+.oms-dialog-fields{display:grid;gap:14px}.oms-dialog-fields label{display:grid;gap:6px}.oms-dialog-fields input,.oms-dialog-fields select,.oms-dialog-fields textarea{min-width:0;width:100%;background:var(--surface,#15181d);color:var(--text,#f7f7f9);border:1px solid var(--border,#373b42);border-radius:7px;padding:10px;font:inherit}
+.oms-dialog-actions{display:flex;justify-content:flex-end;flex-wrap:wrap;gap:10px;position:sticky;bottom:-20px;background:var(--surface,#15181d);padding:16px 0 0;border-top:1px solid var(--border,#373b42);margin-top:8px}
+.oms-dialog :focus-visible{outline:2px solid #ee2737;outline-offset:3px}
+@media(max-width:600px){.oms-dialog-overlay{padding:0}.oms-dialog{height:100dvh;max-height:100dvh;width:100%;max-width:none;border-radius:0}.oms-dialog-body{padding:16px}.oms-dialog-actions{bottom:-16px}}
+/* Keep list pages compact: details render inside dialogs instead of below lists. */
+.tasks-layout:not(.sheet-mode),.projects-layout{display:block!important}
+.tasks-layout .tasks-panel,.projects-layout .projects-panel{width:100%;max-width:none;min-width:0}
+.tasks-layout>.task-detail,.projects-layout>.project-detail,.department-detail-panel[data-detail-host]{display:none}
+/* M3.5 browse/read views: independently contained and readable. */
+.m35-notices-heading,.m35-notices-toolbar{width:100%;min-width:0}
+.m35-notices-toolbar{display:grid;gap:8px;margin-block:16px}.m35-notices-toolbar input{width:100%;padding:12px;border-radius:8px;border:1px solid var(--border,#333);background:var(--surface,#15181d);color:var(--text,#fff)}
+.m35-notice-card{text-align:left;display:grid;gap:10px;width:100%;cursor:pointer;color:var(--text,#fff);border:1px solid var(--border,#333);background:var(--surface,#15181d);border-radius:10px;padding:20px;white-space:normal}
+.m35-notice-card:hover,.m35-notice-card:focus-visible{border-color:#eb2536;outline-offset:2px}.m35-notice-card[hidden]{display:none}
+.m35-notice-top{display:flex;gap:14px;align-items:center;justify-content:space-between}.m35-notice-top strong{font-size:17px}.m35-notice-excerpt{line-height:1.55;white-space:pre-wrap;overflow-wrap:anywhere}.m35-notice-meta{font-size:12px;color:var(--muted,#a0a5af)}
+.m35-reading{max-width:1060px;margin:0 auto}.m35-breadcrumb,.event-breadcrumb{display:flex;align-items:center;gap:15px;margin-bottom:16px;flex-wrap:wrap;color:var(--muted,#a0a5af)}.m35-reading-card{padding:clamp(20px,4vw,50px)}.m35-reading-card h1{font-size:clamp(26px,3vw,36px);line-height:1.2;margin:16px 0}.m35-reading-message{font-size:16px;line-height:1.8;white-space:pre-wrap;overflow-wrap:anywhere;padding-block:24px}.m35-reading-meta{display:flex;gap:10px;flex-wrap:wrap;font-size:13px;color:var(--muted,#a0a5af)}.m35-reading-byline{color:var(--muted,#a0a5af);font-size:13px}.m35-reading-footer{border-top:1px solid var(--border,#333);padding-top:18px}
+.event-fullpage{width:100%;max-width:1500px;margin:0 auto}.event-fullpage .event-detail{width:100%;max-width:100%;min-width:0}.event-fullpage .event-tab-content{min-height:0;padding:clamp(14px,2vw,26px)}.event-fullpage .event-tabs{overflow-x:auto;display:flex;max-width:100%}.event-list-page{width:100%;min-width:0}.event-list-page .event-list{width:100%;max-width:none}.event-list-page .event-list-row{min-height:72px}
+.m35-check{display:flex!important;align-items:center;gap:10px}.m35-check input{width:18px!important}
+/* Legacy create/edit forms share the same background scroll policy during migration. */
+body:has(.modal-overlay){overflow:hidden}

@@ -1,0 +1,1130 @@
+/* DSC HEADER RUNTIME */
+
+.dsc-runtime-header {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.dsc-runtime-theme {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+
+  padding: 3px;
+
+  border:
+    1px solid rgba(255,255,255,.13);
+
+  border-radius: 8px;
+
+  background:
+    rgba(255,255,255,.04);
+}
+
+.dsc-runtime-theme button {
+  height: 27px;
+  min-width: 48px;
+
+  padding: 0 8px;
+
+  border: 0;
+  border-radius: 5px;
+
+  background: transparent;
+
+  color: #8d949f;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.dsc-runtime-theme button:hover {
+  color: #fff;
+
+  background:
+    rgba(255,255,255,.07);
+}
+
+.dsc-runtime-theme button.active {
+  background:
+    #ed1c24 !important;
+
+  color:
+    #fff !important;
+}
+
+
+/* Bell */
+
+.dsc-runtime-bell {
+  position: relative;
+
+  width: 35px;
+  height: 35px;
+
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border:
+    1px solid rgba(255,255,255,.13);
+
+  border-radius: 7px;
+
+  background:
+    rgba(255,255,255,.04);
+
+  color: #fff;
+
+  cursor: pointer;
+}
+
+.dsc-runtime-bell:hover {
+  border-color:
+    rgba(237,28,36,.55);
+
+  background:
+    rgba(237,28,36,.12);
+}
+
+.dsc-runtime-bell-icon {
+  position: relative;
+
+  width: 13px;
+  height: 14px;
+
+  display: block;
+}
+
+.dsc-runtime-bell-icon::before {
+  content: "";
+
+  position: absolute;
+
+  top: 1px;
+  left: 2px;
+
+  width: 9px;
+  height: 10px;
+
+  border:
+    1.5px solid currentColor;
+
+  border-radius:
+    7px 7px 4px 4px;
+}
+
+.dsc-runtime-bell-icon::after {
+  content: "";
+
+  position: absolute;
+
+  left: 5px;
+  bottom: 0;
+
+  width: 3px;
+  height: 2px;
+
+  border-radius:
+    0 0 3px 3px;
+
+  background:
+    currentColor;
+}
+
+
+/* Notification unread badge */
+
+.dsc-runtime-bell
+.notification-nav-badge {
+  position: absolute !important;
+
+  top: -6px !important;
+  right: -6px !important;
+
+  min-width: 17px;
+  height: 17px;
+
+  display: inline-flex !important;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 0 4px;
+
+  border:
+    2px solid #101216;
+
+  border-radius: 99px;
+
+  background:
+    #ed1c24 !important;
+
+  color:
+    #fff !important;
+
+  font-size: 13px;
+  font-weight: 900;
+}
+
+
+/* ==================================================
+   FORCE TRUE LIGHT MODE
+   ================================================== */
+
+html[data-theme="light"],
+html[data-theme="light"] body,
+html[data-theme="light"] #app,
+html[data-theme="light"] .app-shell,
+html[data-theme="light"] .main,
+html[data-theme="light"] .main-content,
+html[data-theme="light"] #page-content {
+  background:
+    #f6f7f8 !important;
+
+  color:
+    #111318 !important;
+}
+
+html[data-theme="light"]
+#page-content .card,
+html[data-theme="light"]
+#page-content .panel,
+html[data-theme="light"]
+html[data-theme="light"]
+#page-content .task-sheet-wrap {
+  background:
+    #ffffff !important;
+
+  border-color:
+    #dfe2e6 !important;
+
+  color:
+    #111318 !important;
+}
+
+html[data-theme="light"]
+#page-content h1,
+html[data-theme="light"]
+#page-content h2,
+html[data-theme="light"]
+#page-content h3,
+html[data-theme="light"]
+#page-content h4,
+html[data-theme="light"]
+#page-content strong {
+  color:
+    #111318 !important;
+}
+
+html[data-theme="light"]
+#page-content p,
+html[data-theme="light"]
+#page-content td {
+  color:
+    #4d535d;
+}
+
+html[data-theme="light"]
+#page-content input,
+html[data-theme="light"]
+#page-content select,
+html[data-theme="light"]
+#page-content textarea {
+  background:
+    #ffffff !important;
+
+  border-color:
+    #dfe2e6 !important;
+
+  color:
+    #111318 !important;
+}
+
+
+/* ==================================================
+   FORCE TRUE DARK MODE
+   ================================================== */
+
+html[data-theme="dark"],
+html[data-theme="dark"] body,
+html[data-theme="dark"] #app,
+html[data-theme="dark"] .app-shell,
+html[data-theme="dark"] .main,
+html[data-theme="dark"] .main-content,
+html[data-theme="dark"] #page-content {
+  background:
+    #0d0f12 !important;
+
+  color:
+    #f5f6f7 !important;
+}
+
+html[data-theme="dark"]
+#page-content .card,
+html[data-theme="dark"]
+#page-content .panel,
+html[data-theme="dark"]
+html[data-theme="dark"]
+#page-content .task-sheet-wrap {
+  background:
+    #15181c !important;
+
+  border-color:
+    #2b3037 !important;
+
+  color:
+    #f5f6f7 !important;
+}
+
+html[data-theme="dark"]
+#page-content h1,
+html[data-theme="dark"]
+#page-content h2,
+html[data-theme="dark"]
+#page-content h3,
+html[data-theme="dark"]
+#page-content h4,
+html[data-theme="dark"]
+#page-content strong {
+  color:
+    #f5f6f7 !important;
+}
+
+html[data-theme="dark"]
+#page-content input,
+html[data-theme="dark"]
+#page-content select,
+html[data-theme="dark"]
+#page-content textarea {
+  background:
+    #111419 !important;
+
+  border-color:
+    #2b3037 !important;
+
+  color:
+    #f5f6f7 !important;
+}
+
+
+@media (max-width: 760px) {
+  .dsc-runtime-theme button {
+    min-width: 38px;
+    padding: 0 5px;
+    font-size: 13px;
+  }
+}
+/* =====================================================
+   DSC_FINAL_MODULE_POLISH
+   ===================================================== */
+
+
+/* =====================================================
+   SIDEBAR BRAND — ALWAYS LEGIBLE
+   ===================================================== */
+
+.sidebar .brand-copy strong,
+.sidebar .sidebar-brand strong {
+  color: #ffffff !important;
+}
+
+.sidebar .brand-copy span,
+.sidebar .sidebar-brand span {
+  color: #9ca3ad !important;
+}
+
+.sidebar .dsc-terminal-mark,
+.sidebar .brand-mark {
+  color: #ed1c24 !important;
+}
+
+
+/* =====================================================
+   PROJECT LIST
+   ===================================================== */
+
+.project-list {
+  background: transparent !important;
+}
+
+.project-row {
+  width: 100%;
+
+  background:
+    var(--surface) !important;
+
+  border-color:
+    var(--border) !important;
+
+  color:
+    var(--text) !important;
+}
+
+.project-row:hover {
+  background:
+    var(--surface-hover) !important;
+}
+
+.project-row.active {
+  background:
+    rgba(237, 28, 36, .055) !important;
+
+  box-shadow:
+    inset 3px 0 0 #ed1c24;
+}
+
+.project-row strong {
+  color:
+    var(--text) !important;
+}
+
+.project-row span,
+.project-row small,
+.project-row p {
+  color:
+    var(--text-muted) !important;
+}
+
+
+/* =====================================================
+   MEMBER LIST
+   ===================================================== */
+
+#user-list-container {
+  background:
+    transparent !important;
+}
+
+#user-list-container > *,
+#user-list-container button {
+  border-color:
+    var(--border) !important;
+}
+
+#user-list-container button {
+  background:
+    var(--surface) !important;
+
+  color:
+    var(--text) !important;
+}
+
+#user-list-container button:hover {
+  background:
+    var(--surface-hover) !important;
+}
+
+#user-list-container button.active,
+#user-list-container button[aria-selected="true"] {
+  background:
+    rgba(237, 28, 36, .055) !important;
+
+  box-shadow:
+    inset 3px 0 0 #ed1c24;
+}
+
+#user-list-container strong {
+  color:
+    var(--text) !important;
+}
+
+#user-list-container span:not(.status),
+#user-list-container small {
+  color:
+    var(--text-muted) !important;
+}
+
+
+/* =====================================================
+   PROJECT + MEMBER DETAILS
+   ===================================================== */
+
+.project-detail,
+.user-detail {
+  background:
+    var(--surface) !important;
+
+  border-color:
+    var(--border) !important;
+
+  color:
+    var(--text) !important;
+}
+
+.project-detail .detail-grid,
+.user-detail .detail-grid,
+.user-detail-grid {
+  background:
+    var(--border) !important;
+
+  gap: 1px !important;
+}
+
+.project-detail .detail-grid > *,
+.user-detail .detail-grid > *,
+.user-detail-grid > *,
+.project-detail .detail-item,
+.user-detail .detail-item {
+  background:
+    var(--surface) !important;
+
+  border-color:
+    var(--border) !important;
+
+  color:
+    var(--text) !important;
+}
+
+.project-detail .detail-item span,
+.user-detail .detail-item span,
+.project-detail .detail-grid span,
+.user-detail .detail-grid span {
+  color:
+    var(--text-muted) !important;
+}
+
+.project-detail .detail-item strong,
+.user-detail .detail-item strong,
+.project-detail .detail-grid strong,
+.user-detail .detail-grid strong {
+  color:
+    var(--text) !important;
+}
+
+
+/* Detail section dividers */
+
+.project-detail .detail-section,
+.user-detail .detail-section {
+  border-color:
+    var(--border) !important;
+}
+
+.project-detail .detail-section h3,
+.user-detail .detail-section h3 {
+  color:
+    var(--text) !important;
+}
+
+
+/* =====================================================
+   PROGRESS COMPONENTS
+   ===================================================== */
+
+.project-detail .progress,
+.task-sheet-progress-track {
+  background:
+    var(--surface-hover) !important;
+}
+
+.project-detail .progress-bar,
+.task-sheet-progress-track i {
+  background:
+    #ed1c24 !important;
+}
+
+
+/* =====================================================
+   FILTER BAR
+   ===================================================== */
+
+.task-advanced-controls {
+  padding:
+    2px 0 8px;
+}
+
+.task-advanced-controls select,
+.task-advanced-controls input[type="date"],
+.task-overdue-filter,
+.task-column-picker > summary {
+  background:
+    var(--surface) !important;
+
+  border-color:
+    var(--border) !important;
+
+  color:
+    var(--text) !important;
+}
+
+
+/* =====================================================
+   TRUE DARK MODULE COLORS
+   ===================================================== */
+
+html[data-theme="dark"]
+.project-row,
+
+html[data-theme="dark"]
+#user-list-container button,
+
+html[data-theme="dark"]
+.project-detail .detail-grid > *,
+
+html[data-theme="dark"]
+.user-detail .detail-grid > *,
+
+html[data-theme="dark"]
+.user-detail-grid > *,
+
+html[data-theme="dark"]
+.detail-item {
+  background:
+    #15181c !important;
+
+  color:
+    #f5f6f7 !important;
+
+  border-color:
+    #2b3037 !important;
+}
+
+
+/* =====================================================
+   TRUE LIGHT MODULE COLORS
+   ===================================================== */
+
+html[data-theme="light"]
+.project-row,
+
+html[data-theme="light"]
+#user-list-container button,
+
+html[data-theme="light"]
+.project-detail .detail-grid > *,
+
+html[data-theme="light"]
+.user-detail .detail-grid > *,
+
+html[data-theme="light"]
+.user-detail-grid > *,
+
+html[data-theme="light"]
+.detail-item {
+  background:
+    #ffffff !important;
+
+  color:
+    #111318 !important;
+
+  border-color:
+    #dfe2e6 !important;
+}
+
+
+/* =====================================================
+   STATUS PILLS
+   Keep semantic colors readable in dark mode
+   ===================================================== */
+
+html[data-theme="dark"]
+.status.completed,
+
+html[data-theme="dark"]
+.status.converted,
+
+html[data-theme="dark"]
+.status.approved,
+
+html[data-theme="dark"]
+.status.active {
+  background:
+    rgba(42, 170, 105, .13) !important;
+}
+
+/* Status foregrounds must be legible on the actual dark-mode pill surface. */
+html[data-theme="dark"] .status.active,
+html[data-theme="dark"] .status.completed,
+html[data-theme="dark"] .status.approved,
+html[data-theme="dark"] .status.converted {
+  color: var(--success);
+}
+
+html[data-theme="dark"] .status.assigned,
+html[data-theme="dark"] .status.ongoing {
+  color: #b3d4ff;
+  background: rgba(121, 174, 242, .15);
+}
+
+html[data-theme="dark"] .status.rejected {
+  color: #ffaaa5;
+  background: rgba(255, 128, 120, .14);
+}
+
+html[data-theme="dark"] .status.archived {
+  color: #d4d8df;
+  background: rgba(255, 255, 255, .09);
+}
+
+html[data-theme="dark"]
+.status.created,
+
+html[data-theme="dark"]
+.status.pending,
+
+html[data-theme="dark"]
+.status.for-review {
+  background:
+    rgba(255, 255, 255, .09) !important;
+
+  color:
+    #d9dde3 !important;
+}
+
+
+/* =====================================================
+   DSC_FINAL_DARK_SURFACE_FIX
+   ===================================================== */
+
+
+/* -----------------------------------------------------
+   REQUESTS
+   ----------------------------------------------------- */
+
+.request-list {
+  background:
+    transparent !important;
+}
+
+.request-list [data-request-id] {
+  background:
+    var(--surface) !important;
+
+  border-color:
+    var(--border) !important;
+
+  color:
+    var(--text) !important;
+}
+
+.request-list [data-request-id]:hover {
+  background:
+    var(--surface-hover) !important;
+}
+
+.request-list [data-request-id].active {
+  background:
+    rgba(237, 28, 36, .055) !important;
+
+  box-shadow:
+    inset 3px 0 0 #ed1c24;
+}
+
+.request-list [data-request-id] strong {
+  color:
+    var(--text) !important;
+}
+
+.request-list [data-request-id] span,
+.request-list [data-request-id] small {
+  color:
+    var(--text-muted) !important;
+}
+
+
+/* -----------------------------------------------------
+   PROJECT DETAIL PROGRESS
+   ----------------------------------------------------- */
+
+.project-detail .progress {
+  background:
+    var(--surface-hover) !important;
+}
+
+.project-detail .progress-bar {
+  background:
+    #ed1c24 !important;
+}
+
+.project-detail
+div:has(> .progress) {
+  background:
+    var(--surface-soft) !important;
+
+  border-color:
+    var(--border) !important;
+
+  color:
+    var(--text) !important;
+}
+
+.project-detail
+div:has(> .progress) span,
+.project-detail
+div:has(> .progress) small {
+  color:
+    var(--text-muted) !important;
+}
+
+
+/* Small tags inside project detail */
+
+.project-detail .tag,
+.project-detail .chip,
+.project-detail .badge {
+  border-color:
+    var(--border) !important;
+
+  background:
+    var(--surface-soft) !important;
+
+  color:
+    var(--text-soft) !important;
+}
+
+
+/* -----------------------------------------------------
+   REPORTS
+   ----------------------------------------------------- */
+
+.report-stat-grid {
+  gap:
+    12px !important;
+}
+
+.report-stat-grid > * {
+  background:
+    var(--surface) !important;
+
+  border:
+    1px solid var(--border) !important;
+
+  color:
+    var(--text) !important;
+}
+
+.report-stat-grid > * span,
+.report-stat-grid > * p,
+.report-stat-grid > * small {
+  color:
+    var(--text-muted) !important;
+}
+
+.report-stat-grid > * strong {
+  color:
+    var(--text) !important;
+}
+
+
+/* Task status cells */
+
+.report-status-grid {
+  background: var(--surface);
+}
+
+.report-status-item {
+  background:
+    var(--surface) !important;
+
+  color:
+    var(--text) !important;
+}
+
+.report-status-item span {
+  color:
+    var(--text-muted) !important;
+}
+
+.report-status-item strong {
+  color:
+    var(--text) !important;
+}
+
+
+/* Report cards */
+
+.report-card,
+.report-card-header {
+  background:
+    var(--surface) !important;
+
+  border-color:
+    var(--border) !important;
+}
+
+.report-card-header h2 {
+  color:
+    var(--text) !important;
+}
+
+.report-card-header p,
+.report-card-header .muted {
+  color:
+    var(--text-muted) !important;
+}
+
+
+/* Request outcomes */
+
+.request-outcome-list {
+  background:
+    var(--surface) !important;
+}
+
+.request-outcome-list > * {
+  border-color:
+    var(--border) !important;
+
+  color:
+    var(--text) !important;
+}
+
+.request-outcome-list span,
+.request-outcome-list small {
+  color:
+    var(--text-muted) !important;
+}
+
+
+/* -----------------------------------------------------
+   AUDIT LOG
+   ----------------------------------------------------- */
+
+.audit-summary {
+  background:
+    var(--border) !important;
+
+  gap:
+    1px !important;
+}
+
+.audit-summary > * {
+  background:
+    var(--surface) !important;
+
+  border-color:
+    var(--border) !important;
+
+  color:
+    var(--text) !important;
+}
+
+.audit-summary > * span,
+.audit-summary > * small {
+  color:
+    var(--text-muted) !important;
+}
+
+.audit-summary > * strong {
+  color:
+    var(--text) !important;
+}
+
+
+/* Filters */
+
+.audit-filters,
+.audit-toolbar {
+  background:
+    var(--surface) !important;
+
+  border-color:
+    var(--border) !important;
+}
+
+
+/* Activity table */
+
+.audit-table-wrap {
+  border-color:
+    var(--border) !important;
+
+  background:
+    var(--surface) !important;
+}
+
+.audit-table {
+  background:
+    var(--surface) !important;
+
+  color:
+    var(--text) !important;
+}
+
+.audit-table thead,
+.audit-table th {
+  background:
+    var(--surface-soft) !important;
+
+  color:
+    var(--text-muted) !important;
+
+  border-color:
+    var(--border) !important;
+}
+
+.audit-table td {
+  background:
+    var(--surface) !important;
+
+  color:
+    var(--text-soft) !important;
+
+  border-color:
+    var(--border) !important;
+}
+
+.audit-table tbody tr:hover td {
+  background:
+    var(--surface-hover) !important;
+}
+
+
+/* -----------------------------------------------------
+   DARK MODE — EXPLICIT
+   ----------------------------------------------------- */
+
+html[data-theme="dark"]
+.request-list [data-request-id],
+
+html[data-theme="dark"]
+.report-stat-grid > *,
+
+html[data-theme="dark"]
+.report-status-item,
+
+html[data-theme="dark"]
+.audit-summary > *,
+
+html[data-theme="dark"]
+.audit-table td {
+  background:
+    #15181c !important;
+
+  color:
+    #f4f5f6 !important;
+
+  border-color:
+    #2b3037 !important;
+}
+
+html[data-theme="dark"]
+.audit-table th {
+  background:
+    #1b1f24 !important;
+
+  color:
+    #a3acba !important;
+}
+
+
+/* -----------------------------------------------------
+   LIGHT MODE — EXPLICIT
+   ----------------------------------------------------- */
+
+html[data-theme="light"]
+.request-list [data-request-id],
+
+html[data-theme="light"]
+.report-stat-grid > *,
+
+html[data-theme="light"]
+.report-status-item,
+
+html[data-theme="light"]
+.audit-summary > *,
+
+html[data-theme="light"]
+.audit-table td {
+  background:
+    #ffffff !important;
+
+  color:
+    #111318 !important;
+
+  border-color:
+    #dfe2e6 !important;
+}
+
+html[data-theme="light"]
+.audit-table th {
+  background:
+    #f3f4f5 !important;
+
+  color:
+    #727985 !important;
+}
+/* =====================================================
+   DSC_FINAL_ROW_FIX
+   ===================================================== */
+
+
+/* TASK LIST */
+
+.task-list {
+  background:
+    transparent !important;
+}
+
+.task-row {
+  width:
+    100% !important;
+
+  background:
+    var(--surface) !important;
+
+  border-color:
+    var(--border) !important;
+
+  color:
+    var(--text) !important;
+}
+
+.task-row:hover {
+  background:
+    var(--surface-hover) !important;
+}
+
+.task-row.active,
+.task-row[aria-selected="true"] {
+  background:
+    rgba(237, 28, 36, .055) !important;
+
+  box-shadow:
+    inset 3px 0 0 #ed1c24;
+}
+
+.task-row strong {
+  color:
+    var(--text) !important;
+}
+
+.task-row span:not(.status):not(.sheet-priority),
+.task-row small,
+.task-row p {
+  color:
+    var(--text-muted) !important;
+}
+
+.task-row .progress {
+  background:
+    var(--surface-hover) !important;
+}
+
+.task-row .progress-bar {
+  background:
+    #ed1c24 !important;
+}
+
+
+/* Projects toolbar: component-specific theme contract.
+   The former :has() override targeted the input parent rather than the toolbar. */
+.projects-toolbar {
+  background: var(--surface);
+  border-color: var(--border);
+}
+.projects-toolbar input,
+.projects-toolbar select {
+  background: var(--input-bg);
+  color: var(--text);
+  border-color: var(--border);
+}
+.projects-toolbar input::placeholder { color: var(--text-muted); }

@@ -1,0 +1,25 @@
+{
+	"name": "dsc-oms-cloudflare",
+	"main": "src/index.ts",
+	"compatibility_date": "2026-10-07",
+	"compatibility_flags": [
+		"global_fetch_strictly_public"
+	],
+	"assets": {
+		"directory": "./public",
+		"run_worker_first": [
+			"/api",
+			"/api/*"
+		]
+	},
+	"observability": {
+		"enabled": true
+	},
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "dsc-oms-staging",
+			"database_id": "007b823e-09a5-47e7-b3a5-77796c834243"
+		}
+	]
+}
